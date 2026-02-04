@@ -1,0 +1,14 @@
+@layer theme, base, components, utilities, typography, layout;
+
+@import "tailwindcss";
+@import "./plugins.css";
+
+@import "./properties.css" layer(base);
+@import "./base.css" layer(base);
+@import "./theme/";
+
+@import "./utils/";
+@import "./components/" layer(components);
+
+@import "./typography.css" layer(typography);
+@import "./layout/" layer(layout);

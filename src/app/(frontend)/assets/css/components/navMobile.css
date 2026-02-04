@@ -1,0 +1,7 @@
+#mobile-menu {
+  @apply top-0 right-0 z-50 isolate fixed bg-white w-full lg:max-w-1/2 h-dvh overflow-auto overscroll-contain translate-x-full;
+}
+
+#mobile-menu-overlay {
+  @apply z-40 isolate fixed inset-0 bg-[rgba(243,243,243,0.81)] opacity-0 backdrop-blur-xs transition-opacity duration-300 pointer-events-none;
+}

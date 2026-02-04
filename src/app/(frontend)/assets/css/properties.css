@@ -1,0 +1,18 @@
+:root,
+:host {
+  --scrollbar-thumb: var(--color-accent);
+  --scrollbar-track: var(--color-body);
+
+  --spacer: 1rem;
+
+  --shoulder: calc(65 / 16 * 1rem);
+  --scroll-padding: calc((100 / 16 * 1rem) + var(--shoulder));
+
+  --color-primary-50: color-mix(in srgb, var(--color-primary) 50%, transparent);
+
+  @variant lg {
+    --spacer: 2rem;
+
+    --shoulder: calc(86 / 16 * 1rem);
+  }
+}

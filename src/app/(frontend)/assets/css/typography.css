@@ -1,0 +1,61 @@
+@counter-style custom {
+  system: cyclic;
+  symbols: "–";
+  suffix: " ";
+}
+
+body {
+  @apply antialiased;
+}
+
+.tw-prose {
+  --tw-prose-body: var(--color-primary);
+  --tw-prose-headings: var(--color-primary);
+  --tw-prose-bullets: var(--color-primary-50);
+  --tw-prose-lead: var(--color-primary-50);
+  --tw-prose-quotes: var(--color-primary-50);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-primary-50);
+  --tw-prose-captions: var(--color-primary-50);
+  --tw-prose-code: var(--color-primary);
+  a {
+    @apply custom-underline no-underline;
+    &:where(.maps-links, .links-underlined-i) {
+      @apply custom-underline-i;
+    }
+  }
+  p {
+    @apply hyphens-auto text-pretty;
+  }
+  details {
+    summary {
+      @apply flex gap-4 cursor-pointer;
+      &::-webkit-details-marker {
+        @apply hidden!;
+      }
+      &::before {
+        @apply content-['▼'];
+        @apply transition-transform duration-750 ease-spring-4 transform-gpu;
+      }
+    }
+    .details-content {
+      @apply fl-ml-6/8;
+    }
+    &[open] {
+      summary {
+        &::before {
+          @apply rotate-180;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * custom classes
+ */
+
+body,
+.text-default {
+  @apply fl-text-[base/xl];
+}
