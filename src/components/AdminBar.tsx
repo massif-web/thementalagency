@@ -29,10 +29,13 @@ const collectionLabels = {
 
 const Title: React.FC = () => <span>Dashboard</span>;
 
-export const AdminBar: React.FC<{
+export const AdminBar = ({
+  className,
+  adminBarProps,
+}: {
+  className?: string;
   adminBarProps?: PayloadAdminBarProps;
-}> = (props) => {
-  const { adminBarProps } = props || {};
+}) => {
   const segments = useSelectedLayoutSegments();
   const [show, setShow] = useState(false);
   const collection = (
@@ -48,15 +51,20 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn(baseClass, "py-2 bg-black text-white max-sm:hidden", {
-        block: show,
-        hidden: !show,
-      })}
+      className={cn(
+        baseClass,
+        "py-2 bg-black text-white max-sm:hidden",
+        className,
+        {
+          block: show,
+          hidden: !show,
+        },
+      )}
     >
       <div className="container">
         <PayloadAdminBar
-          {...adminBarProps}
           className="py-2 text-white"
+          {...adminBarProps}
           classNames={{
             controls: "font-medium text-white",
             logo: "text-white",

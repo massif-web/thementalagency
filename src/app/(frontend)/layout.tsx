@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Rubik } from "next/font/google";
 import { draftMode } from "next/headers";
 import type React from "react";
 import { AdminBar } from "@/components/AdminBar";
@@ -8,28 +8,11 @@ import { Header } from "@/components/Header/Header";
 import { Providers } from "@/providers/Providers";
 import { InitTheme } from "@/providers/Theme/ThemeProvider";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
-import "./assets/css/style.css";
+import "@/assets/css/style.css";
 import { getServerSideURL } from "@/utilities/getURL";
 
-const Roboto = localFont({
-  src: [
-    {
-      path: "./assets/fonts/roboto-v30-latin-regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./assets/fonts/roboto-v30-latin-italic.woff2",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "./assets/fonts/roboto-v30-latin-700.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  display: "swap",
+const PrimaryFont = Rubik({
+  subsets: ["latin"],
   variable: "--font-sans",
 });
 export default async function RootLayout({
@@ -40,23 +23,26 @@ export default async function RootLayout({
   const { isEnabled } = await draftMode();
 
   return (
-    <html lang="en" className={Roboto.variable} suppressHydrationWarning>
+    <html lang="en" className={PrimaryFont.variable} suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className="font-sans">
+      <body className="bg-body font-sans text-primary">
         <Providers>
           <AdminBar
+            className="right-0 bottom-0 z-50 fixed px-4"
             adminBarProps={{
               preview: isEnabled,
+              className: "gap-2",
             }}
           />
-
-          <Header />
-          {children}
-          <Footer />
+          <div className="page-margin">
+            <Header />
+            {children}
+            {/* <Footer /> */}
+          </div>
         </Providers>
       </body>
     </html>
