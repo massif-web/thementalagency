@@ -46,8 +46,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
     alt: altFromProps,
     fill,
-    pictureClassName,
-    imgClassName,
+    className,
     priority,
     resource,
     size: sizeFromProps,
@@ -95,27 +94,25 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         .join(", ");
 
   return (
-    <picture className={cn(pictureClassName)}>
-      <NextImage
-        alt={alt || ""}
-        style={
-          {
-            "--focal-x": `${focalX}%`,
-            "--focal-y": `${focalY}%`,
-          } as React.CSSProperties
-        }
-        className={cn(`object-[var(--focal-x)_var(--focal-y)]`, imgClassName)}
-        fill={fill}
-        height={!fill ? height : undefined}
-        placeholder="blur"
-        blurDataURL={placeholderBlur}
-        priority={priority}
-        quality={85}
-        loading={loading}
-        sizes={sizes}
-        src={src}
-        width={!fill ? width : undefined}
-      />
-    </picture>
+    <NextImage
+      alt={alt || ""}
+      style={
+        {
+          "--focal-x": `${focalX}%`,
+          "--focal-y": `${focalY}%`,
+        } as React.CSSProperties
+      }
+      className={cn(`object-[var(--focal-x)_var(--focal-y)]`, className)}
+      fill={fill}
+      height={!fill ? height : undefined}
+      placeholder="blur"
+      blurDataURL={placeholderBlur}
+      priority={priority}
+      quality={85}
+      loading={loading}
+      sizes={sizes}
+      src={src}
+      width={!fill ? width : undefined}
+    />
   );
 };

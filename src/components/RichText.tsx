@@ -41,11 +41,31 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
 }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  heading: ({ node, nodesToJSX }) => {
+    const Tag = node.tag; // 'h1', 'h2', etc.
+    const children = nodesToJSX({ nodes: node.children });
+
+    // Add your custom classes based on heading level
+    const classNames = {
+      h1: "fl-text-4xl/6xl leading-[1] uppercase font-semibold text-balance",
+      h2: "text-3xl font-semibold mb-4",
+      h3: "text-2xl font-medium mb-3",
+      // etc.
+    } as Record<string, string>;
+
+    return (
+      <Tag
+        className={cn("[&>em]:text-accent [&>em]:not-italic", classNames[Tag])}
+      >
+        {children}
+      </Tag>
+    );
+  },
   blocks: {
-    banner: ({ node }) => (
+    banner: ({ node }: { node: SerializedBlockNode<BannerBlockProps> }) => (
       <BannerBlock className="col-start-2 mb-4" {...node.fields} />
     ),
-    mediaBlock: ({ node }) => (
+    mediaBlock: ({ node }: { node: SerializedBlockNode<MediaBlockProps> }) => (
       <MediaBlock
         className="col-span-3 col-start-1"
         imgClassName="m-0"
@@ -55,8 +75,12 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
         disableInnerContainer={true}
       />
     ),
-    code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    code: ({ node }: { node: SerializedBlockNode<CodeBlockProps> }) => (
+      <CodeBlock className="col-start-2" {...node.fields} />
+    ),
+    cta: ({ node }: { node: SerializedBlockNode<CTABlockProps> }) => (
+      <CallToActionBlock {...node.fields} />
+    ),
   },
 });
 
@@ -72,7 +96,7 @@ export default function RichText(props: Props) {
     <ConvertRichText
       converters={jsxConverters}
       className={cn(
-        "payload-richtext",
+        "richtext",
         {
           container: enableGutter,
           "max-w-none": !enableGutter,

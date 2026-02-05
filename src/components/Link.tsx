@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type React from "react";
+import { NavLink } from "@/components/NavLink";
 import { Button, type ButtonProps } from "@/components/ui/Button";
 import type { Page, Post } from "@/payload-types";
 import { cn } from "@/utilities/ui";
 
 type CMSLinkType = {
-  appearance?: "inline" | ButtonProps["variant"];
+  appearance?: "link" | "inline" | "nav" | ButtonProps["variant"];
   children?: React.ReactNode;
   className?: string;
   label?: string | null;
@@ -15,33 +16,45 @@ type CMSLinkType = {
     value: Page | Post | string | number;
   } | null;
   size?: ButtonProps["size"] | null;
-  type?: "custom" | "reference" | null;
+  type?: "custom" | "reference" | "anchor" | null;
   url?: string | null;
+  isAnchor?: boolean;
 };
 
-export const CMSLink: React.FC<CMSLinkType> = (props) => {
+export const CMSLink = (props: CMSLinkType) => {
   const {
     type,
-    appearance = "inline",
+    appearance = "default",
     children,
     className,
-    label,
+    label: labelFromProps,
     newTab,
     reference,
     size: sizeFromProps,
-    url,
+    url: urlFromProps,
+    isAnchor,
   } = props;
 
-  const href =
-    type === "reference" &&
+  const label =
+    labelFromProps ??
+    (typeof reference?.value === "object" ? reference.value.title : null);
+
+  const url =
+    (type === "reference" || type === "anchor") &&
     typeof reference?.value === "object" &&
     reference.value.slug
-      ? `${reference?.relationTo !== "pages" ? `/${reference?.relationTo}` : ""}/${
-          reference.value.slug
-        }`
-      : url;
+      ? reference.value.slug
+      : urlFromProps;
 
-  if (!href) return null;
+  if (!url) return null;
+  const href =
+    type === "anchor" || isAnchor
+      ? url === "home"
+        ? ""
+        : `#${url}`
+      : url === "home"
+        ? ""
+        : `/${url}`;
 
   const size = appearance === "link" ? "clear" : sizeFromProps;
   const newTabProps = newTab
@@ -52,17 +65,51 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   if (appearance === "inline") {
     return (
       <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
-        {label && label}
-        {children && children}
+        {label}
+        {children}
       </Link>
+    );
+  }
+
+  if (appearance === "nav") {
+    return (
+      <NavLink
+        className={cn(className)}
+        href={href}
+        isAnchor={isAnchor}
+        {...newTabProps}
+      >
+        {label}
+        {children}
+      </NavLink>
+    );
+  }
+
+  if (appearance === "link") {
+    return (
+      <Button
+        asChild
+        className={className}
+        size={"primary"}
+        variant={"primary"}
+      >
+        <Link className={cn(className)} href={href} {...newTabProps}>
+          <span>
+            <span>
+              {label}
+              {children}
+            </span>
+          </span>
+        </Link>
+      </Button>
     );
   }
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
-        {label && label}
-        {children && children}
+      <Link className={cn(className)} href={href} {...newTabProps}>
+        {label}
+        {children}
       </Link>
     </Button>
   );

@@ -1,14 +1,14 @@
 import type React from "react";
 
 import { HeaderThemeProvider } from "./HeaderTheme";
-import { ThemeProvider } from "./Theme/ThemeProvider";
+import { PointerProvider } from "./PointerProvider";
 
 export const Providers: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
-    <ThemeProvider>
+    <PointerProvider>
       <HeaderThemeProvider>{children}</HeaderThemeProvider>
-    </ThemeProvider>
+    </PointerProvider>
   );
 };
