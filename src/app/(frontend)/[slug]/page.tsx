@@ -3,26 +3,14 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { getPayload, type RequiredDataFromCollectionSlug } from "payload";
 import { cache } from "react";
-import { RenderHero } from "@/components/Blocks/Heros/RenderHero";
+import { Hero } from "@/components/Blocks/Hero";
 import { RenderBlocks } from "@/components/Blocks/RenderBlocks";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
-import { homeStatic } from "@/payload/endpoints/seed/home-static";
 import { generateMeta } from "@/utilities/generateMeta";
-import PageClient from "./page.client";
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise });
-  const pages = await payload.find({
-    collection: "pages",
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  });
+  const pages = await getPages();
 
   const params = pages.docs
     ?.filter((doc) => {
@@ -44,37 +32,59 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode();
   const { slug = "home" } = await paramsPromise;
-  // Decode to support slugs with special characters
-  const decodedSlug = decodeURIComponent(slug);
-  const url = `/${decodedSlug}`;
-  let page: RequiredDataFromCollectionSlug<"pages"> | null;
+  if (slug === "home") {
+    const items = await getMainPages();
+    const { navItems } = items || {};
+    return navItems?.map((item) => {
+      const {
+        link: { reference },
+      } = item;
+      if (reference && typeof reference.value === "object") {
+        const page = reference.value as RequiredDataFromCollectionSlug<"pages">;
+        const url = `/${page.slug}`;
+        return (
+          <PageContent key={page.id} page={page} url={url} draft={draft} />
+        );
+      }
+      return null;
+    });
+  } else {
+    // Decode to support slugs with special characters
+    const decodedSlug = decodeURIComponent(slug);
+    const url = `/${decodedSlug}`;
+    const page: RequiredDataFromCollectionSlug<"pages"> | null =
+      await queryPageBySlug({
+        slug: decodedSlug,
+      });
 
-  page = await queryPageBySlug({
-    slug: decodedSlug,
-  });
-
-  // Remove this code once your website is seeded
-  if (!page && slug === "home") {
-    page = homeStatic;
+    return <PageContent page={page} url={url} draft={draft} />;
   }
+}
 
+function PageContent({
+  page,
+  url,
+  draft,
+}: {
+  page: RequiredDataFromCollectionSlug<"pages">;
+  url: string;
+  draft: boolean;
+}) {
   if (!page) {
     return <PayloadRedirects url={url} />;
   }
-
   const { hero, layout } = page;
 
   return (
-    <article className="pt-16 pb-24">
-      <PageClient />
+    <section className="min-h-svh" id={page.slug}>
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
-    </article>
+      {page.slug === "home" && <Hero {...hero} />}
+      <RenderBlocks blocks={layout ? layout : []} />
+    </section>
   );
 }
 
@@ -90,6 +100,28 @@ export async function generateMetadata({
 
   return generateMeta({ doc: page });
 }
+
+const getPages = cache(async () => {
+  const payload = await getPayload({ config: configPromise });
+  const pages = await payload.find({
+    collection: "pages",
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+  });
+  return pages;
+});
+
+const getMainPages = cache(async () => {
+  const payload = await getPayload({ config: configPromise });
+  const pages = await payload.findGlobal({
+    slug: "header",
+    depth: 3,
+    draft: false,
+  });
+  return pages;
+});
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode();
