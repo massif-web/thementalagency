@@ -1,0 +1,6 @@
+{
+  "extends": ["web-recommended"],
+  "hints": {
+    "disallow-inline-styles": "off",
+  },
+}
