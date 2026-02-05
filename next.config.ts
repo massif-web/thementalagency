@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     root: path.join(__dirname, ".."),
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
   images: {
     qualities: [75, 85],
@@ -50,6 +56,10 @@ const nextConfig: NextConfig = {
       ".js": [".ts", ".tsx", ".js", ".jsx"],
       ".mjs": [".mts", ".mjs"],
     };
+    webpackConfig.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
     if (!dev && !isServer) {
       webpackConfig.optimization.splitChunks = {
         chunks: "all",
