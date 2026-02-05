@@ -1,6 +1,5 @@
 import type { Field, GroupField } from "payload";
-
-import deepMerge from "@/utilities/deepMerge";
+import { deepMergeWithCombinedArrays } from "payload";
 
 export type LinkAppearances = "default" | "outline";
 
@@ -34,6 +33,7 @@ export const link: LinkType = ({
     type: "group",
     admin: {
       hideGutter: true,
+      className: "hide-group-header",
     },
     fields: [
       {
@@ -49,11 +49,15 @@ export const link: LinkType = ({
             defaultValue: "reference",
             options: [
               {
-                label: "Internal link",
+                label: "Interner Link",
                 value: "reference",
               },
               {
-                label: "Custom URL",
+                label: "Anker",
+                value: "anchor",
+              },
+              {
+                label: "Eigene URL",
                 value: "custom",
               },
             ],
@@ -67,7 +71,7 @@ export const link: LinkType = ({
               },
               width: "50%",
             },
-            label: "Open in new tab",
+            label: "In neuem Tab öffnen",
           },
         ],
       },
@@ -81,8 +85,18 @@ export const link: LinkType = ({
       admin: {
         condition: (_, siblingData) => siblingData?.type === "reference",
       },
-      label: "Document to link to",
-      relationTo: ["pages", "posts"],
+      label: "Link zu Seite",
+      relationTo: ["pages"],
+      required: true,
+    },
+    {
+      name: "anchor",
+      type: "relationship",
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === "anchor",
+      },
+      label: "Link zu Anker",
+      relationTo: ["pages"],
       required: true,
     },
     {
@@ -91,7 +105,7 @@ export const link: LinkType = ({
       admin: {
         condition: (_, siblingData) => siblingData?.type === "custom",
       },
-      label: "Custom URL",
+      label: "URL",
       required: true,
     },
   ];
@@ -114,6 +128,7 @@ export const link: LinkType = ({
           type: "text",
           admin: {
             width: "50%",
+            condition: (_, siblingData) => siblingData?.type !== "reference",
           },
           label: "Label",
           required: true,
@@ -147,5 +162,5 @@ export const link: LinkType = ({
     });
   }
 
-  return deepMerge(linkResult, overrides);
+  return deepMergeWithCombinedArrays(linkResult, overrides);
 };

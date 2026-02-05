@@ -4,6 +4,13 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig, type PayloadRequest } from "payload";
 import sharp from "sharp";
 import { plugins } from "@/Plugins";
+import {
+  Archive,
+  CallToAction,
+  Content,
+  FormBlock,
+  MediaBlock,
+} from "@/payload/blocks";
 import { Categories } from "@/payload/collections/Categories";
 import { Media } from "@/payload/collections/Media";
 import { Pages } from "@/payload/collections/Pages";
@@ -67,6 +74,8 @@ export default buildConfig({
     url: process.env.DATABASE_URL || "",
   }),
   collections: [Pages, Posts, Media, Categories, Users],
+  blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins,

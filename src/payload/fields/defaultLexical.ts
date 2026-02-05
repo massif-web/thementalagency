@@ -1,5 +1,7 @@
 import {
   BoldFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
   ItalicFeature,
   LinkFeature,
   type LinkFields,
@@ -10,10 +12,13 @@ import {
 import type { TextFieldSingleValidation } from "payload";
 
 export const defaultLexical = lexicalEditor({
-  features: [
+  features: ({ defaultFeatures }) => [
+    ...defaultFeatures,
     ParagraphFeature(),
     UnderlineFeature(),
     BoldFeature(),
+    FixedToolbarFeature(),
+    InlineToolbarFeature(),
     ItalicFeature(),
     LinkFeature({
       enabledCollections: ["pages", "posts"],
@@ -47,4 +52,7 @@ export const defaultLexical = lexicalEditor({
       },
     }),
   ],
+  // features: [
+  //   }),
+  // ],
 });

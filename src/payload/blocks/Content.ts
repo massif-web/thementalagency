@@ -63,7 +63,7 @@ const columnFields: Field[] = [
 ];
 
 export const Content: Block = {
-  slug: "content",
+  slug: "Content",
   interfaceName: "ContentBlock",
   fields: [
     {

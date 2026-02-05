@@ -1,13 +1,23 @@
 "use client";
 import { type RowLabelProps, useRowLabel } from "@payloadcms/ui";
+import { Milestone, SquareArrowOutUpRight } from "lucide-react";
 import type { Header } from "@/payload-types";
 
 export const RowLabel: React.FC<RowLabelProps> = () => {
   const data = useRowLabel<NonNullable<Header["navItems"]>[number]>();
-
+  const isSocialLinks = data?.path.startsWith("socialLinks");
   const label = data?.data?.link?.label
     ? `Nav item ${data.rowNumber !== undefined ? data.rowNumber + 1 : ""}: ${data?.data?.link?.label}`
     : "Row";
 
-  return <div>{label}</div>;
+  return (
+    <div className="flex items-center gap-2 *:fill-none *:stroke-white">
+      {isSocialLinks ? (
+        <SquareArrowOutUpRight size={15} />
+      ) : (
+        <Milestone size={20} />
+      )}
+      {label}
+    </div>
+  );
 };

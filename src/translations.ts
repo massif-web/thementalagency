@@ -97,6 +97,6 @@ export const customTranslations = {
   },
 };
 
-export type CustomTranslationsObject = typeof customTranslations;
+export type CustomTranslationsObject = typeof customTranslations.de & typeof de;
 export type CustomTranslationsKeys =
   NestedKeysStripped<CustomTranslationsObject>;

@@ -5,26 +5,23 @@ import {
   OverviewField,
   PreviewField,
 } from "@payloadcms/plugin-seo/fields";
+import type { TFunction } from "@payloadcms/translations";
 import type { CollectionConfig } from "payload";
-import { authenticated } from "@/payload/access/authenticated";
-import { authenticatedOrPublished } from "@/payload/access/authenticatedOrPublished";
-import { Archive } from "@/payload/blocks/Archive";
-import { CallToAction } from "@/payload/blocks/CallToAction";
-import { Content } from "@/payload/blocks/Content";
-import { FormBlock } from "@/payload/blocks/FormBlock";
-import { MediaBlock } from "@/payload/blocks/MediaBlock";
+import { authenticated, authenticatedOrPublished } from "@/payload/access";
 import { hero } from "@/payload/fields/hero";
+import { populatePublishedAt, preventDeletion } from "@/payload/hooks";
 import {
   revalidateDelete,
   revalidatePage,
 } from "@/payload/hooks/revalidatePage";
 import { slugField } from "@/payload/utilities/slugField";
+import type { CustomTranslationsKeys } from "@/translations";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
-import { populatePublishedAt } from "../hooks/populatePublishedAt";
+
+const protectedSlugs = ["home", "impressum", "datenschutz"];
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
-  orderable: true,
   labels: {
     singular: {
       en: "Page",
@@ -47,7 +44,9 @@ export const Pages: CollectionConfig<"pages"> = {
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
   defaultPopulate: {
     title: true,
-    slug: true,
+    // slug: true,
+    // hero: true,
+    // layout: true,
   },
   admin: {
     defaultColumns: ["title", "slug", "updatedAt"],
@@ -70,6 +69,10 @@ export const Pages: CollectionConfig<"pages"> = {
   fields: [
     {
       name: "title",
+      label: ({ t: defaultT }) => {
+        const t = defaultT as TFunction<CustomTranslationsKeys>;
+        return t("general:title");
+      },
       type: "text",
       required: true,
     },
@@ -79,20 +82,31 @@ export const Pages: CollectionConfig<"pages"> = {
         {
           fields: [hero],
           label: "Hero",
+          admin: {
+            condition: (data) => data?.slug === "home",
+          },
         },
         {
           fields: [
             {
               name: "layout",
               type: "blocks",
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              label: "Blöcke",
+              blockReferences: [
+                "CallToAction",
+                "Content",
+                "MediaBlock",
+                "Archive",
+                "FormBlock",
+              ],
+              blocks: [],
               // required: true,
               admin: {
                 initCollapsed: true,
               },
             },
           ],
-          label: "Content",
+          label: "Inhalt",
         },
         {
           name: "meta",
@@ -134,7 +148,23 @@ export const Pages: CollectionConfig<"pages"> = {
   ],
   hooks: {
     afterChange: [revalidatePage],
-    beforeChange: [populatePublishedAt],
+    beforeChange: [
+      populatePublishedAt,
+      async ({ originalDoc, req }) =>
+        preventDeletion({
+          slug: originalDoc?.slug,
+          protectedSlugs,
+          data: req.data,
+        }),
+    ],
+    beforeDelete: [
+      async ({ id, req }) =>
+        preventDeletion({
+          id,
+          protectedSlugs,
+          data: req.data,
+        }),
+    ],
     afterDelete: [revalidateDelete],
   },
   versions: {

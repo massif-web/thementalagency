@@ -1,7 +1,7 @@
 import type { Block } from "payload";
 
 export const MediaBlock: Block = {
-  slug: "mediaBlock",
+  slug: "MediaBlock",
   interfaceName: "MediaBlock",
   fields: [
     {

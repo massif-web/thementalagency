@@ -7,7 +7,7 @@ import {
 import type { Block } from "payload";
 
 export const Archive: Block = {
-  slug: "archive",
+  slug: "Archive",
   interfaceName: "ArchiveBlock",
   fields: [
     {

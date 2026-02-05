@@ -30,6 +30,18 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      label: "Verknüpfte Seiten",
+      name: "pages",
+      type: "join",
+      collection: "pages",
+      on: "hero.hero.media",
+      admin: {
+        allowCreate: false,
+        defaultColumns: ["title", "updatedAt"],
+      },
+    },
+
+    {
       name: "alt",
       type: "text",
       //required: true,
@@ -53,7 +65,6 @@ export const Media: CollectionConfig = {
     staticDir: "public/media",
     adminThumbnail: "thumbnail",
     focalPoint: true,
-
     imageSizes: [
       {
         name: "thumbnail",

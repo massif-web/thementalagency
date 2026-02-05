@@ -9,7 +9,7 @@ import type { Block } from "payload";
 import { linkGroup } from "../fields/linkGroup";
 
 export const CallToAction: Block = {
-  slug: "cta",
+  slug: "CallToAction",
   interfaceName: "CallToActionBlock",
   fields: [
     {
