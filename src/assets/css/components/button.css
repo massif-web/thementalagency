@@ -1,0 +1,26 @@
+.button {
+  @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-[color] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0;
+}
+
+.btn-primary {
+  /* @apply [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,12px_100%,0_calc(100%-12px))]; */
+  corner-shape: superellipse(0.6) bevel;
+  @apply rounded rounded-tr-xl rounded-bl-xl border border-accent;
+  @apply p-0.5 isolate;
+  @apply text-sm font-medium uppercase tracking-wide;
+  span {
+    corner-shape: superellipse(0.6) bevel;
+    @apply rounded-xs rounded-tr-[0.65rem] rounded-bl-[0.65rem];
+    @apply block;
+  }
+  > span {
+    @apply relative overflow-hidden;
+    @apply px-8 py-4 text-white font-semibold bg-body;
+    @apply transition-colors duration-300 ease-in-out;
+    @apply group-hover:text-body;
+    @apply before:absolute before:transition-transform before:ease-spring-1 before:duration-700 before:inset-0 before:bg-accent before:scale-x-0 group-hover:before:scale-x-100 before:origin-left before:z-0;
+    > span {
+      @apply relative z-10;
+    }
+  }
+}

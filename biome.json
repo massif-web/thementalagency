@@ -14,6 +14,7 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
+      "!src/assets/**/*.css",
       "!src/app/(frontend)/**/*.css",
       "!node_modules",
       "!.next",

@@ -1,5 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
+  content: {
+    files: [
+      "./src/app/(frontend)/**/*",
+      "./src/**/components/**/*",
+      "!./src/app/(payload)/**/*",
+    ],
+  },
   theme: {
     extend: {
       typography: () => ({

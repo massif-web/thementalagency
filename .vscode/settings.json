@@ -1,4 +1,16 @@
 {
   "npm.packageManager": "pnpm",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tailwindCSS.experimental.configFile": {
+    "src/assets/css/style.css": [
+      "./src/app/(frontend)/**/*",
+      "./src/components/**/*",
+      "!./src/app/(payload)/**/*"
+    ],
+    "src/assets/css/payload.css": [
+      "./src/app/(frontend)/**/*",
+      "./src/payload/**/*",
+      "!./src/app/(payload)/**/*"
+    ]
+  }
 }
