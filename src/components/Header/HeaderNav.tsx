@@ -7,15 +7,22 @@ import { cn } from "@/utilities/ui";
 export const HeaderNav = ({ data }: { data: HeaderType }) => {
   const navItems = data?.navItems || [];
   const ids = navItems.map((item) => {
-    const value = item.link.reference?.value as Page;
-    return value.slug;
+    const { link } = item;
+    const value =
+      link &&
+      link.type === "reference" &&
+      link.reference &&
+      typeof link.reference.value === "object"
+        ? (link.reference?.value as Page)
+        : null;
+    return value?.slug || "";
   });
   const activeId = useScrollSpy(ids);
 
   return (
     <nav className="flex items-center fl-gap-4/8 *:px-4 *:py-2 *:hover:text-accent/50 *:text-sm *:uppercase *:tracking-wide *:transition-colors *:duration-300">
       {navItems.map(({ link }, index) => {
-        const key = `nav-link-${index}-${link.url}`;
+        const key = `nav-link-${index}-${link?.url}`;
         return (
           <CMSLink
             key={key}
