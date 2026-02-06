@@ -66,7 +66,7 @@ export const Hero = (hero: Page["hero"]) => {
           </div>
           {media && typeof media === "object" && (
             <Media
-              className="top-0 right-0 bottom-0 absolute w-[55%] h-full object-contain mix-blend-lighten"
+              className="top-0 right-0 bottom-0 absolute bg-contain! w-[55%] h-full object-contain mix-blend-lighten"
               priority
               resource={media}
             />
