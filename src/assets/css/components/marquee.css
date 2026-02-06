@@ -1,4 +1,4 @@
-@keyframes ticker {
+@keyframes marquee {
   0% {
     transform: translate3d(0, 0, 0);
   }
@@ -8,6 +8,6 @@
 }
 
 /* Plain CSS, not in @theme */
-.animate-ticker {
-  animation: ticker var(--speed) linear infinite;
+.animate-marquee {
+  animation: marquee var(--speed) linear infinite;
 }

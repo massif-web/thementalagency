@@ -1,4 +1,5 @@
 import { CMSLink } from "@/components/Link";
+import { Marquee } from "@/components/Marquee";
 import { Media } from "@/components/Media/Media";
 import RichText from "@/components/RichText";
 import type { Page } from "@/payload-types";
@@ -7,14 +8,13 @@ import { MouseGradientBg } from "../Effects/MouseGradientBg";
 
 export const Hero = (hero: Page["hero"]) => {
   const { richText, media, links, keywords: keywordsFromProps } = hero || {};
-  const keywords: string[] =
-    keywordsFromProps?.split(",").map((keyword: string) => keyword.trim()) ||
-    [];
-  const keywordsSet: React.ReactNode[] = [];
-  keywordsSet.push(
-    keywords.map((keyword) => <span key={keyword}>{keyword}</span>),
-  );
-  keywordsSet.push(keywordsSet[0]);
+  const keywords: React.ReactNode[] =
+    keywordsFromProps?.split(",").map((keyword: string) => (
+      <span key={keyword.trim()} className="flex items-center gap-2">
+        <span className="bg-accent size-2 aspect-square rotate-45" />
+        {keyword.trim()}
+      </span>
+    )) || [];
   return (
     <>
       <div className="isolate relative flex justify-center items-center bg-body min-h-svh">
@@ -82,28 +82,12 @@ export const Hero = (hero: Page["hero"]) => {
         />
       </div>
       {keywords.length > 0 && (
-        <div className="bottom-0 left-0 absolute w-full whitespace-nowrap pointer-events-none keywords-marquee">
-          <div className="overflow-x-clip">
-            <div
-              style={
-                {
-                  "--numItems": keywords.length,
-                  "--speed": "calc(var(--numItems) * 1s)",
-                } as React.CSSProperties
-              }
-              className="relative flex items-center w-fit animate-ticker will-change-transform [--translate:-50%] hover:[animation-play-state:_paused;]"
-            >
-              {keywordsSet.map((node, index) => {
-                const key = `node-${index}`;
-                return (
-                  <div key={key} className="min-w-screen">
-                    {node}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <Marquee
+          items={keywords}
+          speed={0.5}
+          className="fl-bottom-5/12 left-0 absolute fl-pb-4/6 border-accent border-b w-full"
+          itemClassName="text-xs uppercase font-medium tracking-wide text-primary fl-px-2/3"
+        />
       )}
     </>
   );
