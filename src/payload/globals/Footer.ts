@@ -37,17 +37,8 @@ export const Footer: GlobalConfig = {
       fields: [
         link({
           appearances: false,
-          overrides: {
-            fields: [
-              {
-                name: "type",
-                type: "text",
-                hidden: true,
-                virtual: true,
-                defaultValue: "custom",
-              },
-            ],
-          },
+          defaultLinkType: "custom",
+          hideLinkTypeSelector: true,
         }),
       ],
       maxRows: 6,

@@ -5,15 +5,16 @@ import type { Page } from "@/payload-types";
 import { DottedGlowBackground } from "../Effects/DottedGlowBackground";
 import { MouseGradientBg } from "../Effects/MouseGradientBg";
 
-export const Hero = ({
-  links,
-  media,
-  richText,
-  keywords: keywordsFromProps,
-}: Page["hero"]) => {
-  const keywords: string[] = keywordsFromProps
-    .split(",")
-    .map((keyword: string) => keyword.trim());
+export const Hero = (hero: Page["hero"]) => {
+  const { richText, media, links, keywords: keywordsFromProps } = hero || {};
+  const keywords: string[] =
+    keywordsFromProps?.split(",").map((keyword: string) => keyword.trim()) ||
+    [];
+  const keywordsSet: React.ReactNode[] = [];
+  keywordsSet.push(
+    keywords.map((keyword) => <span key={keyword}>{keyword}</span>),
+  );
+  keywordsSet.push(keywordsSet[0]);
   return (
     <>
       <div className="isolate relative flex justify-center items-center bg-body min-h-svh">
@@ -81,15 +82,27 @@ export const Hero = ({
         />
       </div>
       {keywords.length > 0 && (
-        <div className="bottom-0 left-0 absolute w-full overflow-hidden whitespace-nowrap pointer-events-none keywords-marquee">
-          {keywords.map((keyword, index) => {
-            const key = `${keyword}-${index}`;
-            return (
-              <span key={key} className="keyword">
-                {keyword}
-              </span>
-            );
-          })}
+        <div className="bottom-0 left-0 absolute w-full whitespace-nowrap pointer-events-none keywords-marquee">
+          <div className="overflow-x-clip">
+            <div
+              style={
+                {
+                  "--numItems": keywords.length,
+                  "--speed": "calc(var(--numItems) * 1s)",
+                } as React.CSSProperties
+              }
+              className="relative flex items-center w-fit animate-ticker will-change-transform [--translate:-50%] hover:[animation-play-state:_paused;]"
+            >
+              {keywordsSet.map((node, index) => {
+                const key = `node-${index}`;
+                return (
+                  <div key={key} className="min-w-screen">
+                    {node}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
     </>

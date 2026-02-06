@@ -34,7 +34,7 @@ export const Media: CollectionConfig = {
       name: "pages",
       type: "join",
       collection: "pages",
-      on: "hero.hero.media",
+      on: "hero.media",
       admin: {
         allowCreate: false,
         defaultColumns: ["title", "updatedAt"],

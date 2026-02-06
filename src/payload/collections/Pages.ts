@@ -44,9 +44,9 @@ export const Pages: CollectionConfig<"pages"> = {
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
   defaultPopulate: {
     title: true,
-    // slug: true,
-    // hero: true,
-    // layout: true,
+    slug: true,
+    hero: true,
+    layout: true,
   },
   admin: {
     defaultColumns: ["title", "slug", "updatedAt"],
@@ -93,11 +93,11 @@ export const Pages: CollectionConfig<"pages"> = {
               type: "blocks",
               label: "Blöcke",
               blockReferences: [
-                "CallToAction",
-                "Content",
-                "MediaBlock",
-                "Archive",
-                "FormBlock",
+                "callToActionBlock",
+                "contentBlock",
+                "mediaBlock",
+                "archiveBlock",
+                "formBlock",
               ],
               blocks: [],
               // required: true,

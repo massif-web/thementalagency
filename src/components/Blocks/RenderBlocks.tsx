@@ -8,15 +8,15 @@ import { MediaBlock } from "@/components/Blocks/MediaBlock";
 import type { Page } from "@/payload-types";
 
 const blockComponents = {
-  archive: ArchiveBlock,
-  content: ContentBlock,
-  cta: CallToActionBlock,
+  archiveBlock: ArchiveBlock,
+  contentBlock: ContentBlock,
+  callToActionBlock: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
 };
 
 export const RenderBlocks: React.FC<{
-  blocks: Page["layout"][0][];
+  blocks: Page["layout"];
 }> = (props) => {
   const { blocks } = props;
 

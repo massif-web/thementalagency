@@ -16,13 +16,11 @@ import {
 } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 import { slugField } from "payload";
+import { BannerBlock, CodeBlock, MediaBlock } from "@/payload/blocks/";
 import { generatePreviewPath } from "../../utilities/generatePreviewPath";
 import { admins } from "../access/admins";
 import { authenticated } from "../access/authenticated";
 import { authenticatedOrPublished } from "../access/authenticatedOrPublished";
-import { Banner } from "../blocks/Banner";
-import { Code } from "../blocks/Code";
-import { MediaBlock } from "../blocks/MediaBlock";
 import { populateAuthors } from "../hooks/populateAuthors";
 import { revalidateDelete, revalidatePost } from "../hooks/revalidatePost";
 
@@ -102,7 +100,9 @@ export const Posts: CollectionConfig<"posts"> = {
                     HeadingFeature({
                       enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
                     }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({
+                      blocks: [BannerBlock, CodeBlock, MediaBlock],
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

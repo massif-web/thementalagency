@@ -62,9 +62,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
     );
   },
   blocks: {
-    banner: ({ node }: { node: SerializedBlockNode<BannerBlockProps> }) => (
-      <BannerBlock className="col-start-2 mb-4" {...node.fields} />
-    ),
+    bannerBlock: ({
+      node,
+    }: {
+      node: SerializedBlockNode<BannerBlockProps>;
+    }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }: { node: SerializedBlockNode<MediaBlockProps> }) => (
       <MediaBlock
         className="col-span-3 col-start-1"
@@ -75,12 +77,14 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
         disableInnerContainer={true}
       />
     ),
-    code: ({ node }: { node: SerializedBlockNode<CodeBlockProps> }) => (
+    codeBlock: ({ node }: { node: SerializedBlockNode<CodeBlockProps> }) => (
       <CodeBlock className="col-start-2" {...node.fields} />
     ),
-    cta: ({ node }: { node: SerializedBlockNode<CTABlockProps> }) => (
-      <CallToActionBlock {...node.fields} />
-    ),
+    callToActionBlock: ({
+      node,
+    }: {
+      node: SerializedBlockNode<CTABlockProps>;
+    }) => <CallToActionBlock {...node.fields} />,
   },
 });
 

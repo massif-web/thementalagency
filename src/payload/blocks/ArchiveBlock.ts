@@ -6,9 +6,8 @@ import {
 } from "@payloadcms/richtext-lexical";
 import type { Block } from "payload";
 
-export const Archive: Block = {
-  slug: "Archive",
-  interfaceName: "ArchiveBlock",
+export const ArchiveBlock: Block = {
+  slug: "archiveBlock",
   fields: [
     {
       name: "introContent",

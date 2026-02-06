@@ -36,11 +36,15 @@ export default async function Page({ params: paramsPromise }: Args) {
     const items = await getMainPages();
     const { navItems } = items || {};
     return navItems?.map((item) => {
-      const {
-        link: { reference },
-      } = item;
-      if (reference && typeof reference.value === "object") {
-        const page = reference.value as RequiredDataFromCollectionSlug<"pages">;
+      const { link } = item;
+      if (
+        link &&
+        link.type === "reference" &&
+        link.reference &&
+        typeof link.reference.value === "object"
+      ) {
+        const page = link.reference
+          .value as RequiredDataFromCollectionSlug<"pages">;
         const url = `/${page.slug}`;
         return (
           <PageContent key={page.id} page={page} url={url} draft={draft} />

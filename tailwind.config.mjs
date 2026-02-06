@@ -3,6 +3,7 @@ const config = {
   content: {
     files: [
       "./src/app/(frontend)/**/*",
+      "./src/assets/**/*",
       "./src/**/components/**/*",
       "!./src/app/(payload)/**/*",
     ],

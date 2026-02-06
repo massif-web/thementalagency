@@ -5,9 +5,10 @@ import { buildConfig, type PayloadRequest } from "payload";
 import sharp from "sharp";
 import { plugins } from "@/Plugins";
 import {
-  Archive,
-  CallToAction,
-  Content,
+  ArchiveBlock,
+  BannerBlock,
+  CallToActionBlock,
+  ContentBlock,
   FormBlock,
   MediaBlock,
 } from "@/payload/blocks";
@@ -74,7 +75,14 @@ export default buildConfig({
     url: process.env.DATABASE_URL || "",
   }),
   collections: [Pages, Posts, Media, Categories, Users],
-  blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+  blocks: [
+    CallToActionBlock,
+    ContentBlock,
+    MediaBlock,
+    BannerBlock,
+    ArchiveBlock,
+    FormBlock,
+  ],
 
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],

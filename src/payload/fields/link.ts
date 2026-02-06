@@ -2,6 +2,7 @@ import type { Field, GroupField } from "payload";
 import { deepMergeWithCombinedArrays } from "payload";
 
 export type LinkAppearances = "default" | "outline";
+export type LinkTypes = "reference" | "anchor" | "custom";
 
 export const appearanceOptions: Record<
   LinkAppearances,
@@ -20,12 +21,16 @@ export const appearanceOptions: Record<
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false;
   disableLabel?: boolean;
-  overrides?: Partial<GroupField>;
+  defaultLinkType?: LinkTypes;
+  hideLinkTypeSelector?: boolean;
+  overrides?: Partial<Omit<GroupField, "fields">>;
 }) => Field;
 
 export const link: LinkType = ({
   appearances,
   disableLabel = false,
+  defaultLinkType = "reference",
+  hideLinkTypeSelector = false,
   overrides = {},
 } = {}) => {
   const linkResult: GroupField = {
@@ -45,8 +50,11 @@ export const link: LinkType = ({
             admin: {
               layout: "horizontal",
               width: "50%",
+              ...(hideLinkTypeSelector && {
+                hidden: true,
+              }),
             },
-            defaultValue: "reference",
+            defaultValue: defaultLinkType,
             options: [
               {
                 label: "Interner Link",
