@@ -2,6 +2,7 @@ import "dotenv/config";
 import path from "node:path";
 import config from "@payload-config";
 import { getPayload } from "payload";
+import { migrateBlurDataUrls } from "./blurDataUrlsMigrationScript";
 
 async function regenerateMedia() {
   try {
@@ -43,3 +44,5 @@ async function regenerateMedia() {
 }
 
 await regenerateMedia();
+await migrateBlurDataUrls();
+process.exit(0);

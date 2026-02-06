@@ -1,3 +1,4 @@
+import { blurDataUrlsPlugin } from "@oversightstudio/blur-data-urls";
 import { formBuilderPlugin } from "@payloadcms/plugin-form-builder";
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
@@ -11,6 +12,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 import type { Plugin } from "payload";
 import { deepMergeWithCombinedArrays } from "payload";
+import { Media } from "@/payload/collections/Media";
 import { searchFields } from "@/payload/fields/searchFields";
 import { beforeSyncWithSearch } from "@/payload/hooks/beforeSync";
 import { revalidateRedirects } from "@/payload/hooks/revalidateRedirects";
@@ -139,6 +141,16 @@ export const plugins: Plugin[] = [
         deepMergeWithCombinedArrays(defaultFields, [
           generalTranslation,
         ]) as typeof defaultFields,
+    },
+  }),
+  blurDataUrlsPlugin({
+    enabled: true,
+    collections: [Media],
+    // Blur data URLs Settings (Optional)
+    blurOptions: {
+      blur: 2,
+      width: 10,
+      height: "auto",
     },
   }),
   searchPlugin({
