@@ -5,35 +5,35 @@ export function useScrollSpy(sectionIds: string[], offset = 0) {
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find all currently intersecting sections
-        const intersecting = entries
-          .filter((entry) => entry.isIntersecting)
-          .map((entry) => ({
-            id: entry.target.id,
-            ratio: entry.intersectionRatio,
-            top: entry.boundingClientRect.top,
-          }))
-          .sort((a, b) => a.top - b.top); // Sort by position
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + offset + 1; // +1 to handle edge case at top
 
-        // Pick the topmost intersecting section
-        if (intersecting.length > 0) {
-          setActiveId(intersecting[0].id);
+      // Find which section we're currently in
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (!element) continue;
+
+        const { top, bottom } = element.getBoundingClientRect();
+        const elementTop = top + window.scrollY;
+        const elementBottom = bottom + window.scrollY;
+
+        // Check if scroll position is within this section
+        if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
+          setActiveId(id);
+          break;
         }
-      },
-      {
-        rootMargin: `${-offset}px 0px -80% 0px`,
-        threshold: [0, 0.25, 0.5, 0.75, 1], // Multiple thresholds for smoother tracking
-      },
-    );
+      }
 
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+      // Fallback: if at very top, activate first section
+      if (window.scrollY === 0) {
+        setActiveId(sectionIds[0]);
+      }
+    };
 
-    return () => observer.disconnect();
+    handleScroll(); // Set initial state
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [sectionIds, offset]);
 
   return activeId;
