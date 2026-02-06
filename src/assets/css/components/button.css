@@ -18,7 +18,8 @@
     @apply px-8 py-4 text-white font-semibold bg-body;
     @apply transition-colors duration-300 ease-in-out;
     @apply group-hover:text-body;
-    @apply before:absolute before:transition-transform before:ease-spring-1 before:duration-700 before:inset-0 before:bg-accent before:scale-x-0 group-hover:before:scale-x-100 before:origin-left before:z-0;
+    @apply before:absolute before:inset-0 before:bg-accent before:z-0;
+    @apply before:transition-transform before:ease-spring-1 group-hover:before:ease-spring-2 before:duration-700 before:scale-x-0 group-hover:before:scale-x-100 before:origin-left;
     > span {
       @apply relative z-10;
     }
