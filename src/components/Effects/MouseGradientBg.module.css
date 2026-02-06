@@ -9,7 +9,7 @@
 
 .gradient-card::before {
   --resolved-opacity: calc(var(--opacity, 0.5) * var(--alpha, 1));
-  --resolved-color: var(--color, --color-accent);
+  --resolved-color: var(--color, var(--color-accent, #ccc));
   --resolved-size: var(--size, 50vw);
   /* --resolved-color: oklch(from var(--color-accent) l c calc(h + 45)); */
   /* --resolved-color-transparent: color-mix(
