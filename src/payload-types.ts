@@ -93,6 +93,7 @@ export interface Config {
   collectionsJoins: {
     media: {
       pages: 'pages';
+      seo: 'pages';
     };
     'payload-folders': {
       documentsAndFolders: 'payload-folders' | 'media';
@@ -280,6 +281,11 @@ export interface Page {
 export interface Media {
   id: string;
   pages?: {
+    docs?: (string | Page)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  seo?: {
     docs?: (string | Page)[];
     hasNextPage?: boolean;
     totalDocs?: number;
@@ -1141,6 +1147,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   pages?: T;
+  seo?: T;
   alt?: T;
   caption?: T;
   blurDataUrl?: T;

@@ -87,6 +87,9 @@ export const Pages: CollectionConfig<"pages"> = {
           },
         },
         {
+          admin: {
+            condition: (data) => data?.slug !== "home",
+          },
           fields: [
             {
               name: "layout",

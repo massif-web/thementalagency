@@ -40,7 +40,28 @@ export const Media: CollectionConfig = {
         defaultColumns: ["title", "updatedAt"],
       },
     },
-
+    {
+      label: "Verknüpfte SEO-Daten",
+      name: "seo",
+      type: "join",
+      collection: "pages",
+      on: "meta.image",
+      admin: {
+        allowCreate: false,
+        defaultColumns: ["title", "updatedAt"],
+      },
+    },
+    // {
+    //   label: "Verknüpfte Inhalte",
+    //   name: "content",
+    //   type: "join",
+    //   collection: "pages",
+    //   on: "layout.mediaBlock.media",
+    //   admin: {
+    //     allowCreate: false,
+    //     defaultColumns: ["title", "updatedAt"],
+    //   },
+    // },
     {
       name: "alt",
       type: "text",
