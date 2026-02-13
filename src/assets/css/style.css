@@ -2,10 +2,10 @@
 
 @import "tailwindcss";
 @import "./plugins.css";
+@import "./theme/";
 
 @import "./properties.css" layer(base);
 @import "./base.css" layer(base);
-@import "./theme/";
 
 @import "./utils/";
 @import "./components/" layer(components);
