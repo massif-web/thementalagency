@@ -4,13 +4,15 @@ import type { Config, Media, Page, Post } from "../payload-types";
 import { getServerSideURL } from "./getURL";
 import { mergeOpenGraph } from "./mergeOpenGraph";
 
+export const defaultSiteName: string = "The Mental Agency®";
+
 const getImageURL = (image?: Media | Config["db"]["defaultIDType"] | null) => {
   const serverUrl = getServerSideURL();
 
   let url = `${serverUrl}/website-template-OG.webp`;
 
   if (image && typeof image === "object" && "url" in image) {
-    const ogUrl = image.sizes?.og?.url;
+    const ogUrl = image.sizes?.opengraph?.url;
 
     url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url;
   }
@@ -26,8 +28,8 @@ export const generateMeta = async (args: {
   const ogImage = getImageURL(doc?.meta?.image);
 
   const title = doc?.meta?.title
-    ? `${doc?.meta?.title} | Payload Website Template`
-    : "Payload Website Template";
+    ? `${doc?.meta?.title} | ${defaultSiteName}`
+    : defaultSiteName;
 
   return {
     description: doc?.meta?.description,
