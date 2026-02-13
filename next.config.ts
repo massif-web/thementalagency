@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
     reactRemoveProperties: process.env.NODE_ENV === "production",
   },
   experimental: {
+    turbopackFileSystemCacheForDev: true,
     optimizePackageImports: ["lucide-react", "date-fns"],
     cssChunking: true,
     useLightningcss: true,
