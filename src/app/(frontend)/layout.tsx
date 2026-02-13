@@ -24,9 +24,21 @@ export default async function RootLayout({
   return (
     <html lang="en" className={PrimaryFont.variable} suppressHydrationWarning>
       <head>
-        <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <meta name="apple-mobile-web-app-title" content="The Mental Agency" />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="bg-body font-sans text-primary">
         <Providers>
@@ -53,6 +65,6 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: "summary_large_image",
-    creator: "@payloadcms",
+    creator: "@massifweb",
   },
 };
