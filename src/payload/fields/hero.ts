@@ -1,7 +1,7 @@
 import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 
 import type { Field } from "payload";
-
+import { link } from "@/payload/fields/link";
 import { linkGroup } from "@/payload/fields/linkGroup";
 
 export const hero: Field = {
@@ -27,18 +27,30 @@ export const hero: Field = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
+            HeadingFeature({ enabledHeadingSizes: ["h1"] }),
           ];
         },
       }),
       label: false,
     },
-    linkGroup({
+    link({
       appearances: false,
       overrides: {
-        maxRows: 2,
+        label: "Button",
+        admin: {
+          description: "Optionaler Link für den Button im Hero",
+          hideGutter: false,
+          className: "",
+        },
       },
     }),
+    // linkGroup({
+    //   appearances: false,
+    //   overrides: {
+    //     maxRows: 1,
+    //     label: "Button",
+    //   },
+    // }),
     {
       name: "keywords",
       type: "textarea",

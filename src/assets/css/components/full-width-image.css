@@ -1,0 +1,16 @@
+.full-width-image {
+  @apply relative bg-accent isolate;
+  img {
+    @apply mix-blend-hard-light;
+  }
+  &:before,
+  &:after {
+    @apply absolute z-5 border-accent size-10 content-[""] pointer-events-none;
+  }
+  &:before {
+    @apply top-10 left-10 border-t border-l;
+  }
+  &:after {
+    @apply bottom-10 right-10 border-b border-r;
+  }
+}

@@ -1,20 +1,24 @@
+import dynamic from "next/dynamic";
+import { DottedGlowBackground } from "@/components/Effects/DottedGlowBackground";
+import { MouseGradientBg } from "@/components/Effects/MouseGradientBg";
 import { CMSLink } from "@/components/Link";
-import { Marquee } from "@/components/Marquee";
 import { Media } from "@/components/Media/Media";
 import RichText from "@/components/RichText";
+import { CaroText } from "@/components/ui/CaroText";
 import type { Page } from "@/payload-types";
-import { DottedGlowBackground } from "../Effects/DottedGlowBackground";
-import { MouseGradientBg } from "../Effects/MouseGradientBg";
+
+const Marquee = dynamic(() =>
+  import("@/components/Marquee").then((mod) => mod.Marquee),
+);
 
 export const Hero = (hero: Page["hero"]) => {
-  const { richText, media, links, keywords: keywordsFromProps } = hero || {};
+  const { richText, media, link, keywords: keywordsFromProps } = hero || {};
   const keywords: React.ReactNode[] =
-    keywordsFromProps?.split(",").map((keyword: string) => (
-      <span key={keyword.trim()} className="flex items-center gap-2">
-        <span className="bg-accent size-2 aspect-square rotate-45" />
-        {keyword.trim()}
-      </span>
-    )) || [];
+    keywordsFromProps
+      ?.split(",")
+      .map((keyword: string) => (
+        <CaroText key={keyword.trim()}>{keyword.trim()}</CaroText>
+      )) || [];
   return (
     <>
       <div className="isolate relative flex justify-center items-center bg-body min-h-svh">
@@ -52,16 +56,10 @@ export const Hero = (hero: Page["hero"]) => {
                 enableProse={false}
               />
             )}
-            {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex gap-4 fl-mt-8/12">
-                {links.map(({ link }, i) => {
-                  return (
-                    <li key={`link-${i}-${link?.url || ""}`}>
-                      <CMSLink {...link} appearance="link" />
-                    </li>
-                  );
-                })}
-              </ul>
+            {link && (
+              <div className="flex gap-4 fl-mt-8/12">
+                <CMSLink {...link} appearance="button" />
+              </div>
             )}
           </div>
           {media && typeof media === "object" && (
@@ -85,7 +83,7 @@ export const Hero = (hero: Page["hero"]) => {
         <Marquee
           items={keywords}
           speed={0.5}
-          className="fl-bottom-5/12 left-0 absolute fl-pb-4/6 border-accent border-b w-full"
+          className="fl-bottom-5/12 left-0 absolute fl-py-4/5 border-accent border-b w-full"
           itemClassName="text-xs uppercase font-medium tracking-wide text-primary fl-px-2/3"
         />
       )}

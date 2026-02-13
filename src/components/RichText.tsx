@@ -48,7 +48,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
     // Add your custom classes based on heading level
     const classNames = {
       h1: "fl-text-4xl/6xl leading-[1] uppercase font-semibold text-balance",
-      h2: "text-3xl font-semibold mb-4",
+      h2: "fl-text-[1.25rem/1.625rem] leading-tight uppercase font-semibold text-balance",
       h3: "text-2xl font-medium mb-3",
       // etc.
     } as Record<string, string>;
@@ -72,7 +72,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
         className="col-span-3 col-start-1"
         imgClassName="m-0"
         {...node.fields}
-        captionClassName="mx-auto max-w-[48rem]"
+        captionClassName="mx-auto max-w-3xl"
         enableGutter={false}
         disableInnerContainer={true}
       />

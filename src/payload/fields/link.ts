@@ -29,7 +29,7 @@ type LinkType = (options?: {
 export const link: LinkType = ({
   appearances,
   disableLabel = false,
-  defaultLinkType = "reference",
+  defaultLinkType = "anchor",
   hideLinkTypeSelector = false,
   overrides = {},
 } = {}) => {
@@ -46,6 +46,7 @@ export const link: LinkType = ({
         fields: [
           {
             name: "type",
+            label: "Link-Typ",
             type: "radio",
             admin: {
               layout: "horizontal",
@@ -57,12 +58,12 @@ export const link: LinkType = ({
             defaultValue: defaultLinkType,
             options: [
               {
-                label: "Interner Link",
-                value: "reference",
-              },
-              {
                 label: "Anker",
                 value: "anchor",
+              },
+              {
+                label: "Interner Link",
+                value: "reference",
               },
               {
                 label: "Eigene URL",
@@ -91,21 +92,10 @@ export const link: LinkType = ({
       name: "reference",
       type: "relationship",
       admin: {
-        condition: (_, siblingData) => siblingData?.type === "reference",
+        condition: (_, siblingData) => siblingData?.type !== "custom",
       },
-      label: "Link zu Seite",
+      label: "Link",
       relationTo: ["pages"],
-      required: true,
-    },
-    {
-      name: "anchor",
-      type: "relationship",
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === "anchor",
-      },
-      label: "Link zu Anker",
-      relationTo: ["pages"],
-      required: true,
     },
     {
       name: "url",
@@ -114,7 +104,6 @@ export const link: LinkType = ({
         condition: (_, siblingData) => siblingData?.type === "custom",
       },
       label: "URL",
-      required: true,
     },
   ];
 

@@ -92,6 +92,13 @@ export const Media: CollectionConfig = {
         width: 300,
       },
       {
+        name: "opengraph",
+        width: 1200,
+        height: 630,
+        withoutEnlargement: true,
+        fit: "cover",
+      },
+      {
         name: "ogX",
         width: 2500,
         withoutEnlargement: true,

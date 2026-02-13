@@ -66,6 +66,8 @@ export interface Config {
     users: UserAuthOperations;
   };
   blocks: {
+    titleBlock: TitleBlock;
+    cardsBlock: CardsBlock;
     callToActionBlock: CallToActionBlock;
     contentBlock: ContentBlock;
     mediaBlock: MediaBlock;
@@ -161,9 +163,10 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "callToActionBlock".
+ * via the `definition` "titleBlock".
  */
-export interface CallToActionBlock {
+export interface TitleBlock {
+  preTitle?: string | null;
   richText?: {
     root: {
       type: string;
@@ -179,100 +182,42 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  links?:
-    | {
-        link?: {
-          type?: ('reference' | 'anchor' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          anchor?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          url?: string | null;
-          label?: string | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'callToActionBlock';
+  blockType: 'titleBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
+ * via the `definition` "cardsBlock".
  */
-export interface Page {
-  id: string;
-  title: string;
-  hero?: {
-    media?: (string | null) | Media;
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link?: {
-            type?: ('reference' | 'anchor' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            anchor?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            label?: string | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Kommagetrennte Liste von Schlüsselwörtern für animiertes Band
-     */
-    keywords?: string | null;
-  };
-  layout?: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
+export interface CardsBlock {
+  style?: ('icons' | 'price' | 'faq') | null;
+  columns?:
+    | {
+        size?: ('oneFourth' | 'oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        icon?: (string | null) | Media;
+        name: string;
+        description: string;
+        price?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * Optional
    */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
+  link?: {
+    type?: ('anchor' | 'reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cardsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -329,6 +274,14 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
+    opengraph?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
     ogX?: {
       url?: string | null;
       width?: number | null;
@@ -349,29 +302,110 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-folders".
+ * via the `definition` "pages".
  */
-export interface FolderInterface {
+export interface Page {
   id: string;
-  name: string;
-  folder?: (string | null) | FolderInterface;
-  documentsAndFolders?: {
-    docs?: (
-      | {
-          relationTo?: 'payload-folders';
-          value: string | FolderInterface;
-        }
-      | {
-          relationTo?: 'media';
-          value: string | Media;
-        }
-    )[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
+  title: string;
+  hero?: {
+    media?: (string | null) | Media;
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Optionaler Link für den Button im Hero
+     */
+    link?: {
+      type?: ('anchor' | 'reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?: {
+        relationTo: 'pages';
+        value: string | Page;
+      } | null;
+      url?: string | null;
+      label?: string | null;
+    };
+    /**
+     * Kommagetrennte Liste von Schlüsselwörtern für animiertes Band
+     */
+    keywords?: string | null;
   };
-  folderType?: 'media'[] | null;
+  layout?:
+    | (TitleBlock | CardsBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "callToActionBlock".
+ */
+export interface CallToActionBlock {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link?: {
+          type?: ('anchor' | 'reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToActionBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -398,13 +432,9 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'anchor' | 'custom') | null;
+          type?: ('anchor' | 'reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          anchor?: {
             relationTo: 'pages';
             value: string | Page;
           } | null;
@@ -428,6 +458,8 @@ export interface ContentBlock {
  */
 export interface MediaBlock {
   media: string | Media;
+  title?: string | null;
+  description?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -770,6 +802,32 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders".
+ */
+export interface FolderInterface {
+  id: string;
+  name: string;
+  folder?: (string | null) | FolderInterface;
+  documentsAndFolders?: {
+    docs?: (
+      | {
+          relationTo?: 'payload-folders';
+          value: string | FolderInterface;
+        }
+      | {
+          relationTo?: 'media';
+          value: string | Media;
+        }
+    )[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  folderType?: 'media'[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "bannerBlock".
  */
 export interface BannerBlock {
@@ -1076,20 +1134,14 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         media?: T;
         richText?: T;
-        links?:
+        link?:
           | T
           | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    anchor?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              id?: T;
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
             };
         keywords?: T;
       };
@@ -1168,6 +1220,16 @@ export interface MediaSelect<T extends boolean = true> {
     | T
     | {
         thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        opengraph?:
           | T
           | {
               url?: T;
@@ -1527,13 +1589,9 @@ export interface Header {
   navItems?:
     | {
         link?: {
-          type?: ('reference' | 'anchor' | 'custom') | null;
+          type?: ('anchor' | 'reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          anchor?: {
             relationTo: 'pages';
             value: string | Page;
           } | null;
@@ -1555,13 +1613,9 @@ export interface Footer {
   items?:
     | {
         link?: {
-          type?: ('reference' | 'anchor' | 'custom') | null;
+          type?: ('anchor' | 'reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          anchor?: {
             relationTo: 'pages';
             value: string | Page;
           } | null;
@@ -1574,13 +1628,9 @@ export interface Footer {
   socialLinks?:
     | {
         link?: {
-          type?: ('reference' | 'anchor' | 'custom') | null;
+          type?: ('anchor' | 'reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          anchor?: {
             relationTo: 'pages';
             value: string | Page;
           } | null;
@@ -1607,7 +1657,6 @@ export interface HeaderSelect<T extends boolean = true> {
               type?: T;
               newTab?: T;
               reference?: T;
-              anchor?: T;
               url?: T;
               label?: T;
             };
@@ -1631,7 +1680,6 @@ export interface FooterSelect<T extends boolean = true> {
               type?: T;
               newTab?: T;
               reference?: T;
-              anchor?: T;
               url?: T;
               label?: T;
             };
@@ -1646,7 +1694,6 @@ export interface FooterSelect<T extends boolean = true> {
               type?: T;
               newTab?: T;
               reference?: T;
-              anchor?: T;
               url?: T;
               label?: T;
             };

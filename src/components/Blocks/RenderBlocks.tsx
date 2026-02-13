@@ -1,13 +1,17 @@
-import type React from "react";
-import { Fragment } from "react";
-import { ArchiveBlock } from "@/components/Blocks/ArchiveBlock";
-import { CallToActionBlock } from "@/components/Blocks/CallToAction";
-import { ContentBlock } from "@/components/Blocks/Content";
-import { FormBlock } from "@/components/Blocks/FormBlock";
-import { MediaBlock } from "@/components/Blocks/MediaBlock";
+import {
+  ArchiveBlock,
+  CallToActionBlock,
+  CardsBlock,
+  ContentBlock,
+  FormBlock,
+  MediaBlock,
+  TitleBlock,
+} from "@/components/Blocks";
 import type { Page } from "@/payload-types";
 
 const blockComponents = {
+  titleBlock: TitleBlock,
+  cardsBlock: CardsBlock,
   archiveBlock: ArchiveBlock,
   contentBlock: ContentBlock,
   callToActionBlock: CallToActionBlock,
@@ -17,32 +21,33 @@ const blockComponents = {
 
 export const RenderBlocks: React.FC<{
   blocks: Page["layout"];
+  slug: string;
 }> = (props) => {
-  const { blocks } = props;
+  const { blocks, slug } = props;
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0;
 
   if (hasBlocks) {
     return (
-      <Fragment>
+      <div className="section-p" data-blocks={`blocks-${slug}`}>
         {blocks.map((block) => {
-          const { blockType } = block;
+          const { blockType, ...blockProps } = block;
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType];
 
             if (Block) {
+              const BlockComponent = Block as React.FC<typeof blockProps>;
               return (
-                <div className="my-16" key={`block-${block.id}`}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+                <div key={`block-${block.id}`}>
+                  <BlockComponent {...blockProps} />
                 </div>
               );
             }
           }
           return null;
         })}
-      </Fragment>
+      </div>
     );
   }
 

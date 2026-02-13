@@ -14,12 +14,22 @@ body {
   }
 }
 
-.hero-text {
-  :where(h1 + p) {
+.hero-text,
+.title-text {
+  :where(:is(h1) + p) {
     @apply mt-[1.5em];
+  }
+  :where(:is(h2) + p) {
+    @apply mt-[1em];
   }
   p {
     @apply font-medium fl-text-xl/2xl;
+  }
+}
+
+.title-text {
+  p {
+    @apply font-light fl-text-sm/base tracking-wide;
   }
 }
 
@@ -72,5 +82,5 @@ body {
 
 body,
 .text-default {
-  @apply fl-text-[base/xl];
+  @apply fl-text-base/xl;
 }

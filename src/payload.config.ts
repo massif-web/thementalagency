@@ -8,9 +8,11 @@ import {
   ArchiveBlock,
   BannerBlock,
   CallToActionBlock,
+  CardsBlock,
   ContentBlock,
   FormBlock,
   MediaBlock,
+  TitleBlock,
 } from "@/payload/blocks";
 import { Categories } from "@/payload/collections/Categories";
 import { Media } from "@/payload/collections/Media";
@@ -76,6 +78,8 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Users],
   blocks: [
+    TitleBlock,
+    CardsBlock,
     CallToActionBlock,
     ContentBlock,
     MediaBlock,

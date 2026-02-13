@@ -6,7 +6,7 @@ import type { Page, Post } from "@/payload-types";
 import { cn } from "@/utilities/ui";
 
 type CMSLinkType = {
-  appearance?: "link" | "inline" | "nav" | ButtonProps["variant"];
+  appearance?: "button" | "inline" | "nav" | ButtonProps["variant"];
   children?: React.ReactNode;
   className?: string;
   label?: string | null;
@@ -85,7 +85,7 @@ export const CMSLink = (props: CMSLinkType) => {
     );
   }
 
-  if (appearance === "link") {
+  if (appearance === "button") {
     return (
       <Button
         asChild

@@ -87,15 +87,20 @@ export const Pages: CollectionConfig<"pages"> = {
           },
         },
         {
-          admin: {
-            condition: (data) => data?.slug !== "home",
-          },
+          label: "Inhalt",
           fields: [
             {
               name: "layout",
               type: "blocks",
               label: "Blöcke",
+              labels: {
+                singular: "Block",
+                plural: "Blöcke",
+              },
+              // The block types that can be added to this layout field
               blockReferences: [
+                "titleBlock",
+                "cardsBlock",
                 "callToActionBlock",
                 "contentBlock",
                 "mediaBlock",
@@ -109,7 +114,6 @@ export const Pages: CollectionConfig<"pages"> = {
               },
             },
           ],
-          label: "Inhalt",
         },
         {
           name: "meta",

@@ -61,7 +61,7 @@ export function Marquee({
     <div
       ref={containerRef}
       className={cn(
-        "relative component:max-w-full component:overflow-x-clip whitespace-nowrap marquee-container",
+        "relative component:max-w-full component:overflow-x-clip whitespace-nowrap marquee-container hover:*:paused",
         className,
       )}
     >
@@ -74,7 +74,7 @@ export function Marquee({
           } as React.CSSProperties
         }
         className={cn(
-          "relative component:flex component:items-center w-fit transform-gpu animate-marquee will-change-transform hover:paused",
+          "relative component:flex component:items-center w-fit transform-gpu animate-marquee will-change-transform",
         )}
       >
         {Array.from({ length: copies }, (_, i) => {
