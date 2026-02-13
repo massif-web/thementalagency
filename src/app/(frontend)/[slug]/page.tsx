@@ -87,7 +87,7 @@ function PageContent({
       {draft && <LivePreviewListener />}
 
       {page.slug === "home" && <Hero {...hero} />}
-      <RenderBlocks blocks={layout ? layout : []} />
+      <RenderBlocks blocks={layout ? layout : []} slug={page.slug} />
     </section>
   );
 }
