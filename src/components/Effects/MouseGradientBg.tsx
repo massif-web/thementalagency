@@ -6,7 +6,7 @@ import styles from "./MouseGradientBg.module.css";
 export function MouseGradientBg({
   children,
   id,
-  opacity = 0.5,
+  opacity = 1,
   blendMode = "mix-blend-difference",
   size = "50vw",
   className = "",
@@ -39,6 +39,7 @@ export function MouseGradientBg({
   opacity?: number;
 } & React.HTMLAttributes<HTMLDivElement>) {
   const ref = usePointerElementPosition(id);
+  const ref2 = usePointerElementPosition(`${id}-2`);
 
   return (
     <div {...props} className={cn(className, "size-full pointer-events-none")}>
@@ -47,7 +48,17 @@ export function MouseGradientBg({
         ref={ref as React.RefObject<HTMLDivElement>}
         className={cn(styles["gradient-card"], innerClassName || "", blendMode)}
         style={{ "--opacity": opacity, "--size": size } as React.CSSProperties}
-      ></div>
+      />
+      <div
+        ref={ref2 as React.RefObject<HTMLDivElement>}
+        className={cn(styles["gradient-card"], innerClassName || "", blendMode)}
+        style={
+          {
+            "--opacity": opacity,
+            "--size": `calc(${size} / 3)`,
+          } as React.CSSProperties
+        }
+      />
     </div>
   );
 }

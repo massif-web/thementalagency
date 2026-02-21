@@ -1,14 +1,14 @@
 @utility section-pl {
-  @apply fl-pl-5/12;
+  @apply clamp-[pl,5,12];
 }
 @utility section-pr {
-  @apply fl-pr-5/12;
+  @apply clamp-[pr,5,12];
 }
 @utility section-pt {
-  @apply fl-pt-5/12;
+  @apply clamp-[pt,5,12];
 }
 @utility section-pb {
-  @apply fl-pb-5/12;
+  @apply clamp-[pb,5,12];
 }
 @utility section-px {
   @apply section-pl section-pr;
@@ -23,5 +23,5 @@
   @apply mx-auto w-full lg:max-w-[90svw] xl:max-w-500;
 }
 @utility base-grid {
-  @apply grid grid-cols-4 lg:grid-cols-12 *:col-span-4 lg:*:col-span-12 fl-gap-x-[0.625rem/2.5rem];
+  @apply grid grid-cols-4 lg:grid-cols-12 *:col-span-4 lg:*:col-span-12 clamp-[gap-x,0.625rem,2.5rem];
 }

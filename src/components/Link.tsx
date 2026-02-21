@@ -2,7 +2,7 @@ import Link from "next/link";
 import type React from "react";
 import { NavLink } from "@/components/NavLink";
 import { Button, type ButtonProps } from "@/components/ui/Button";
-import type { Page, Post } from "@/payload-types";
+import type { Page } from "@/payload-types";
 import { cn } from "@/utilities/ui";
 
 type CMSLinkType = {
@@ -12,13 +12,15 @@ type CMSLinkType = {
   label?: string | null;
   newTab?: boolean | null;
   reference?: {
-    relationTo: "pages" | "posts";
-    value: Page | Post | string | number;
+    relationTo: "pages";
+    value: Page | string | number;
   } | null;
   size?: ButtonProps["size"] | null;
   type?: "custom" | "reference" | "anchor" | null;
   url?: string | null;
   isAnchor?: boolean;
+  prefetch?: boolean;
+  isLivePreview?: boolean;
 };
 
 export const CMSLink = (props: CMSLinkType) => {
@@ -49,12 +51,12 @@ export const CMSLink = (props: CMSLinkType) => {
   if (!url) return null;
   const href =
     type === "anchor" || isAnchor
-      ? url === "home"
-        ? ""
-        : `#${url}`
+      ? `#${url}`
       : url === "home"
         ? ""
-        : `/${url}`;
+        : type === "custom"
+          ? `${url}`
+          : `/${url}`;
 
   const size = appearance === "link" ? "clear" : sizeFromProps;
   const newTabProps = newTab
@@ -77,7 +79,7 @@ export const CMSLink = (props: CMSLinkType) => {
         className={cn(className)}
         href={href}
         isAnchor={isAnchor}
-        {...newTabProps}
+        {...props}
       >
         {label}
         {children}

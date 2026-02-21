@@ -1,6 +1,7 @@
 html {
   @apply [scrollbar-color:var(--scrollbar-thumb)_var(--scrollbar-track)] [scrollbar-width:thin] [scrollbar-gutter:stable];
-  @apply scroll-pt-(--scroll-padding);
+  /* @apply scroll-pt-(--scroll-padding); */
+  @apply clamp-[scroll-pt,70px,90px];
   @apply not-[.menu-open]:scroll-smooth;
   @apply [.menu-open]:overscroll-none;
   &.disable-smooth-scroll {
@@ -14,4 +15,34 @@ body {
 
 ::target-text {
   @apply bg-amber-200 text-primary;
+}
+
+@keyframes float-x {
+  0%,
+  100% {
+    translate: calc(var(--float-range-x) * -1) 0;
+  }
+  50% {
+    translate: var(--float-range-x) 0;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(calc(var(--float-range-y) * -1));
+  }
+  50% {
+    transform: translateY(var(--float-range-y));
+  }
+}
+
+@keyframes float-r {
+  0%,
+  100% {
+    rotate: calc(var(--float-range-r) * -1);
+  }
+  50% {
+    rotate: var(--float-range-r);
+  }
 }

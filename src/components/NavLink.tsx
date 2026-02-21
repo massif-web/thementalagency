@@ -1,5 +1,5 @@
 "use client";
-import Link, { type LinkProps } from "next/link";
+import type { LinkProps } from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { cn } from "@/utilities/ui";
 
@@ -9,6 +9,8 @@ type NavLinkType = {
   activeClassName?: string;
   href?: string | null;
   isAnchor?: boolean;
+  isLivePreview?: boolean;
+  newTab?: boolean | null;
 } & LinkProps;
 
 export const NavLink = ({
@@ -17,17 +19,22 @@ export const NavLink = ({
   activeClassName = "text-accent",
   href,
   isAnchor,
+  prefetch: _prefetch,
+  isLivePreview = false,
+  newTab: _newTab,
   ...props
 }: NavLinkType) => {
   const segments = useSelectedLayoutSegments();
-  const isActive = isAnchor ? false : href === `/${segments.join("/")}`;
+  const isActive = isAnchor
+    ? isLivePreview && href === `#${segments.join("/")}`
+    : href === `/${segments.join("/")}`;
   return (
-    <Link
+    <a
       className={cn(className, isActive && activeClassName)}
       href={href}
       {...props}
     >
       {children}
-    </Link>
+    </a>
   );
 };

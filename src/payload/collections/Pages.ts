@@ -97,15 +97,21 @@ export const Pages: CollectionConfig<"pages"> = {
                 singular: "Block",
                 plural: "Blöcke",
               },
-              // The block types that can be added to this layout field
+              // filterOptions: ({ siblingData }) => {
+              //   const { slug } = siblingData as { slug?: string };
+              //   if (slug && slug === "ueber-mich") {
+              //     return ["aboutBlock"];
+              //   }
+              //   return true;
+              // },
               blockReferences: [
                 "titleBlock",
                 "cardsBlock",
-                "callToActionBlock",
-                "contentBlock",
+                "contactBlock",
+                "aboutBlock",
+                "faqBlock",
                 "mediaBlock",
-                "archiveBlock",
-                "formBlock",
+                "hrBlock",
               ],
               blocks: [],
               // required: true,

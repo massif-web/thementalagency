@@ -15,26 +15,30 @@ export const Text: React.FC<
   TextField & {
     errors: Partial<FieldErrorsImpl>;
     register: UseFormRegister<FieldValues>;
+    id: string;
+    message?: string;
   }
-> = ({ name, defaultValue, errors, label, register, required, width }) => {
+> = ({ id, message, defaultValue, label, register, required, width }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
 
         {required && (
           <span className="required">
-            * <span className="sr-only">(required)</span>
+            * <span className="sr-only">(Pflichtfeld)</span>
           </span>
         )}
       </Label>
       <Input
         defaultValue={defaultValue}
-        id={name}
+        id={id}
         type="text"
-        {...register(name, { required })}
+        {...register(id, {
+          required: required ? message || "Bitte ausfüllen" : false,
+        })}
       />
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

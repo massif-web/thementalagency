@@ -1,14 +1,17 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
+import { useFormState } from "react-hook-form";
 
-export const FormError = ({ name }: { name: string }) => {
-  const {
-    formState: { errors },
-  } = useFormContext();
+export const FormError = ({ id }: { id: string }) => {
+  const { errors } = useFormState();
+
+  const error = errors[id]?.message as string | undefined;
+  if (!error) {
+    return null;
+  }
   return (
-    <div className="mt-2 text-red-500 text-sm">
-      {(errors[name]?.message as string) || "This field is required"}
+    <div className="mt-2 form-alert error">
+      {error || "This field is required"}
     </div>
   );
 };

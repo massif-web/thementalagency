@@ -15,10 +15,10 @@ export const MediaBlock: Block = {
     },
     {
       name: "title",
-      type: "text",
+      type: "textarea",
       label: "Titel",
       admin: {
-        width: "50%",
+        className: "media-block-title",
       },
     },
     {

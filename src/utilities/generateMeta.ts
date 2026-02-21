@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-
+import { defaultSiteName } from "@/config";
 import type { Config, Media, Page, Post } from "../payload-types";
 import { getServerSideURL } from "./getURL";
 import { mergeOpenGraph } from "./mergeOpenGraph";
-
-export const defaultSiteName: string = "The Mental Agency®";
 
 const getImageURL = (image?: Media | Config["db"]["defaultIDType"] | null) => {
   const serverUrl = getServerSideURL();

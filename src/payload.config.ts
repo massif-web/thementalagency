@@ -1,23 +1,26 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 import { buildConfig, type PayloadRequest } from "payload";
 import sharp from "sharp";
 import { plugins } from "@/Plugins";
 import {
-  ArchiveBlock,
-  BannerBlock,
-  CallToActionBlock,
+  AboutBlock,
+  // ArchiveBlock,
+  // BannerBlock,
+  // CallToActionBlock,
   CardsBlock,
-  ContentBlock,
-  FormBlock,
+  ContactBlock,
+  // ContentBlock,
+  FaqBlock,
+  // FormBlock,
+  HrBlock,
   MediaBlock,
   TitleBlock,
 } from "@/payload/blocks";
-import { Categories } from "@/payload/collections/Categories";
 import { Media } from "@/payload/collections/Media";
 import { Pages } from "@/payload/collections/Pages";
-import { Posts } from "@/payload/collections/Posts";
 import { Users } from "@/payload/collections/Users";
 import { defaultLexical } from "@/payload/fields/defaultLexical";
 import { Footer } from "@/payload/globals/Footer";
@@ -49,6 +52,8 @@ export default buildConfig({
     },
     user: Users.slug,
     livePreview: {
+      url: ({ data }) =>
+        `${process.env.NEXT_PUBLIC_SERVER_URL}${data.slug ?? ""}?live-preview`,
       breakpoints: [
         {
           label: "Mobile",
@@ -76,16 +81,20 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || "",
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Media, Users],
   blocks: [
+    ContactBlock,
     TitleBlock,
     CardsBlock,
-    CallToActionBlock,
-    ContentBlock,
+    // CallToActionBlock,
+    // ContentBlock,
     MediaBlock,
-    BannerBlock,
-    ArchiveBlock,
-    FormBlock,
+    // BannerBlock,
+    AboutBlock,
+    // ArchiveBlock,
+    //FormBlock,
+    HrBlock,
+    FaqBlock,
   ],
 
   cors: [getServerSideURL()].filter(Boolean),
@@ -93,6 +102,19 @@ export default buildConfig({
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,
+  email: nodemailerAdapter({
+    defaultFromAddress: "echo@mentalagency.ch",
+    defaultFromName: "The Mental Agency",
+    // transportOptions: {
+    //   host: process.env.SMTP_HOST,
+    //   port: 587,
+    //   auth: {
+    //     user: process.env.SMTP_USER,
+    //     pass: process.env.SMTP_PASS,
+    //   },
+    // },
+  }),
+
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },

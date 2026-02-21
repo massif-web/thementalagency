@@ -1,7 +1,5 @@
 @import "tw-animate-css";
-@plugin "fluid-tailwindcss" {
-  checkaccessibility: false;
-}
+@plugin "tailwind-clamp";
 @plugin "@tailwindcss/typography" {
   /* prettier-ignore */
   className: tw-prose;

@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export function useScrollSpy(sectionIds: string[], offset = 0) {
+export function useScrollSpy(sectionIds: string[], offset = 0, draft = false) {
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
+      if (draft) return; // Disable scroll spy in draft mode
       const scrollPosition = window.scrollY + offset + 1; // +1 to handle edge case at top
 
       // Find which section we're currently in
@@ -34,7 +35,7 @@ export function useScrollSpy(sectionIds: string[], offset = 0) {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [sectionIds, offset]);
+  }, [sectionIds, offset, draft]);
 
   return activeId;
 }

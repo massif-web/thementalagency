@@ -68,7 +68,7 @@ const cardFields: Field[] = [
   {
     name: "price",
     type: "text",
-    label: "Preis",
+    label: "Dauer/Preis",
     required: true,
     admin: {
       style: { width: "100px" },
@@ -107,12 +107,12 @@ export const CardsBlock: Block = {
     },
     {
       name: "columns",
+      type: "array",
       label: "Spalten",
       labels: {
         singular: "Spalte",
         plural: "Spalten",
       },
-      type: "array",
       admin: {
         initCollapsed: false,
       },

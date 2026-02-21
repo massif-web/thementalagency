@@ -1,5 +1,5 @@
 .button {
-  @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-[color] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0;
+  @apply cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap transition-[color] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0;
 }
 
 .btn-primary {
@@ -7,7 +7,7 @@
   corner-shape: superellipse(0.6) bevel;
   @apply rounded rounded-tr-xl rounded-bl-xl border border-accent;
   @apply p-0.5 isolate;
-  @apply text-sm font-medium uppercase tracking-wide;
+  @apply text-sm font-medium uppercase tracking-wide leading-none;
   span {
     corner-shape: superellipse(0.6) bevel;
     @apply rounded-xs rounded-tr-[0.65rem] rounded-bl-[0.65rem];
@@ -19,7 +19,8 @@
     @apply transition-colors duration-300 ease-in-out;
     @apply group-hover:text-body;
     @apply before:absolute before:inset-0 before:bg-accent before:z-0;
-    @apply before:transition-transform before:ease-spring-1 group-hover:before:ease-spring-2 before:duration-700 before:scale-x-0 group-hover:before:scale-x-100 before:origin-left;
+    @apply before:transition-all before:opacity-0 before:ease-spring-1 before:duration-700 before:scale-x-0 before:origin-left;
+    @apply group-hover:before:scale-x-100 group-hover:before:opacity-100 group-hover:before:ease-spring-2;
     > span {
       @apply relative z-10;
     }

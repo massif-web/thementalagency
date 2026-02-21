@@ -1,0 +1,21 @@
+.faq-item {
+  @apply bg-accent/2 border-accent/50 border-t;
+  > button {
+    @apply flex justify-between items-center gap-4 px-2 py-3 w-full text-accent text-left uppercase cursor-pointer clamp-[text,lg,xl];
+    .icon {
+      @apply size-3.5 text-accent transition-transform duration-300;
+    }
+  }
+  .answer {
+    @apply grid transition-[grid-template-rows] duration-300 ease-out;
+  }
+  .answer-wrap {
+    @apply px-2;
+    > div {
+      @apply py-3 border-accent/20 border-t font-light text-white clamp-[text,sm,base];
+      p {
+        @apply text-balance max-w-[90ch];
+      }
+    }
+  }
+}

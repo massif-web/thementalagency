@@ -2,10 +2,6 @@
 :host {
   --spacer: 1rem;
 
-  --shoulder: calc(65 / 16 * 1rem);
-  /* --scroll-padding: calc((100 / 16 * 1rem) + var(--shoulder)); */
-  --scroll-padding: 0;
-
   --color-primary-50: color-mix(in srgb, var(--color-primary) 25%, transparent);
 
   --scrollbar-thumb: var(--color-primary-50);
@@ -13,7 +9,5 @@
 
   @variant lg {
     --spacer: 2rem;
-
-    --shoulder: calc(86 / 16 * 1rem);
   }
 }

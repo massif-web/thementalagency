@@ -1,7 +1,6 @@
 import type { CollectionSlug, PayloadRequest } from "payload";
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
-  posts: "/posts",
   pages: "",
 };
 
@@ -23,7 +22,7 @@ export const generatePreviewPath = ({ collection, slug }: Props) => {
   const encodedParams = new URLSearchParams({
     slug: encodedSlug,
     collection,
-    path: `${collectionPrefixMap[collection]}/${encodedSlug}`,
+    path: `${collectionPrefixMap[collection]}/${encodedSlug}?live-preview`, // This path should match the one defined in payload.config.ts for livePreview.url
     previewSecret: process.env.PREVIEW_SECRET || "",
   });
 

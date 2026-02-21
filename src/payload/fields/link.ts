@@ -128,7 +128,6 @@ export const link: LinkType = ({
             condition: (_, siblingData) => siblingData?.type !== "reference",
           },
           label: "Label",
-          required: true,
         },
       ],
     });

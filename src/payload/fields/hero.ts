@@ -2,7 +2,6 @@ import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 
 import type { Field } from "payload";
 import { link } from "@/payload/fields/link";
-import { linkGroup } from "@/payload/fields/linkGroup";
 
 export const hero: Field = {
   name: "hero",

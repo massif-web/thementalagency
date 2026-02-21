@@ -1,4 +1,5 @@
 import type { TextField } from "@payloadcms/plugin-form-builder/types";
+import { ShieldAlert } from "lucide-react";
 import type React from "react";
 import type {
   FieldErrorsImpl,
@@ -16,37 +17,49 @@ export const Textarea: React.FC<
     errors: Partial<FieldErrorsImpl>;
     register: UseFormRegister<FieldValues>;
     rows?: number;
+    description?: string;
+    id: string;
+    message?: string;
   }
 > = ({
-  name,
+  id,
   defaultValue,
-  errors,
   label,
+  description,
   register,
+  message,
   required,
   rows = 3,
   width,
 }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
 
         {required && (
           <span className="required">
-            * <span className="sr-only">(required)</span>
+            * <span className="sr-only">(Pflichtfeld)</span>
           </span>
         )}
       </Label>
 
       <TextAreaComponent
         defaultValue={defaultValue}
-        id={name}
+        id={id}
         rows={rows}
-        {...register(name, { required: required })}
+        {...register(id, {
+          required: required ? message || "Bitte ausfüllen" : false,
+        })}
       />
+      {description && (
+        <p className="description">
+          <ShieldAlert />
+          <span>{description}</span>
+        </p>
+      )}
 
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

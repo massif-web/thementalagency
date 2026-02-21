@@ -1,7 +1,11 @@
+export { AboutBlock } from "@/components/Blocks/AboutBlock";
 export { ArchiveBlock } from "@/components/Blocks/ArchiveBlock";
 export { CallToActionBlock } from "@/components/Blocks/CallToAction";
 export { CardsBlock } from "@/components/Blocks/CardsBlock";
+export { ContactBlock } from "@/components/Blocks/ContactBlock";
 export { ContentBlock } from "@/components/Blocks/Content";
+export { FaqBlock } from "@/components/Blocks/FaqBlock";
 export { FormBlock } from "@/components/Blocks/FormBlock";
+export { HrBlock } from "@/components/Blocks/HrBlock";
 export { MediaBlock } from "@/components/Blocks/MediaBlock";
 export { TitleBlock } from "@/components/Blocks/TitleBlock";

@@ -1,6 +1,6 @@
 import configPromise from "@payload-config";
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
+import { draftMode, headers } from "next/headers";
 import { getPayload, type RequiredDataFromCollectionSlug } from "payload";
 import { cache } from "react";
 import { Hero } from "@/components/Blocks/Hero";
@@ -8,6 +8,7 @@ import { RenderBlocks } from "@/components/Blocks/RenderBlocks";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
 import { generateMeta } from "@/utilities/generateMeta";
+import { cn } from "@/utilities/ui";
 
 export async function generateStaticParams() {
   const pages = await getPages();
@@ -30,9 +31,10 @@ type Args = {
 };
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode();
+  const headerList = await headers();
+  const isLivePreview = headerList.get("x-live-preview") === "1";
   const { slug = "home" } = await paramsPromise;
-  if (slug === "home") {
+  if (slug === "home" && !isLivePreview) {
     const items = await getMainPages();
     const { navItems } = items || {};
     return navItems?.map((item) => {
@@ -47,7 +49,12 @@ export default async function Page({ params: paramsPromise }: Args) {
           .value as RequiredDataFromCollectionSlug<"pages">;
         const url = `/${page.slug}`;
         return (
-          <PageContent key={page.id} page={page} url={url} draft={draft} />
+          <PageContent
+            key={page.id}
+            page={page}
+            url={url}
+            isLivePreview={false}
+          />
         );
       }
       return null;
@@ -61,18 +68,27 @@ export default async function Page({ params: paramsPromise }: Args) {
         slug: decodedSlug,
       });
 
-    return <PageContent page={page} url={url} draft={draft} />;
+    return (
+      <PageContent
+        page={page}
+        url={url}
+        isLivePreview={isLivePreview}
+        slug={slug}
+      />
+    );
   }
 }
 
 function PageContent({
   page,
   url,
-  draft,
+  isLivePreview,
+  slug,
 }: {
   page: RequiredDataFromCollectionSlug<"pages">;
   url: string;
-  draft: boolean;
+  isLivePreview: boolean;
+  slug?: string;
 }) {
   if (!page) {
     return <PayloadRedirects url={url} />;
@@ -80,14 +96,24 @@ function PageContent({
   const { hero, layout } = page;
 
   return (
-    <section className="min-h-svh" id={page.slug}>
+    <section
+      className={cn(
+        "in-[.live-preview]:section-pb",
+        page.slug !== "home" && "in-[.live-preview]:clamp-[pt,28,40]",
+      )}
+      id={page.slug}
+    >
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
-      {draft && <LivePreviewListener />}
+      {isLivePreview && <LivePreviewListener />}
 
       {page.slug === "home" && <Hero {...hero} />}
-      <RenderBlocks blocks={layout ? layout : []} slug={page.slug} />
+      <div className="section-wrapper page-margin section-px">
+        <div>
+          <RenderBlocks blocks={layout ? layout : []} slug={page.slug} />
+        </div>
+      </div>
     </section>
   );
 }

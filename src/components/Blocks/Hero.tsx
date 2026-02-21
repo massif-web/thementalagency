@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import { DottedGlowBackground } from "@/components/Effects/DottedGlowBackground";
+import { Float } from "@/components/Effects/Float";
 import { MouseGradientBg } from "@/components/Effects/MouseGradientBg";
+import { NoiseOverlay } from "@/components/Effects/NoiseOverlay";
 import { CMSLink } from "@/components/Link";
 import { Media } from "@/components/Media/Media";
 import RichText from "@/components/RichText";
@@ -21,7 +23,7 @@ export const Hero = (hero: Page["hero"]) => {
       )) || [];
   return (
     <>
-      <div className="isolate relative flex justify-center items-center bg-body min-h-svh">
+      <div className="isolate relative flex flex-col bg-body min-h-svh overflow-clip clamp-[mb,-5,-12]">
         {/* <div className="z-10 relative flex justify-center items-center mb-8 container">
       </div>
       <div className="min-h-[80vh] select-none">
@@ -37,38 +39,43 @@ export const Hero = (hero: Page["hero"]) => {
       </div> */}
         <DottedGlowBackground
           color={"rgb(234, 196, 64)"}
-          glowColor={"rgb(255, 255, 255)"}
+          glowColor={"rgb(234, 196, 64)"}
           speedMin={0.15}
           speedMax={1.5}
           speedScale={1.25}
-          radius={2}
-          opacity={0.4}
+          radius={3}
+          opacity={1}
           gap={14}
-          className="isolate absolute inset-0 mask-b-from-65% mask-t-from-55% mask-radial-to-90% pointer-events-none mask-radial-at-center"
+          className="z-5 isolate absolute inset-0 mask-b-from-65% mask-t-from-55% mask-radial-to-90% pointer-events-none mask-radial-at-center"
         />
-        <div className="w-full section-p">
-          <div className="mt-[-10%] max-w-prose">
-            {richText && (
-              <RichText
-                className="hero-text"
-                data={richText}
-                enableGutter={false}
-                enableProse={false}
-              />
+        <div className="relative flex flex-1 justify-center items-center w-full page-margin">
+          <div className="w-full section-p">
+            <div className="z-5 relative mt-[-10%] max-w-prose">
+              {richText && (
+                <RichText
+                  className="hero-text"
+                  data={richText}
+                  enableGutter={false}
+                  enableProse={false}
+                />
+              )}
+              {link && (
+                <div className="flex gap-4 clamp-[mt,8,12]">
+                  <CMSLink {...link} appearance="button" />
+                </div>
+              )}
+            </div>
+            {media && typeof media === "object" && (
+              <Float className="top-0 right-0 bottom-0 absolute w-[55%] h-full pointer-events-none user-select-none mix-blend-lighten">
+                <Media
+                  className="bg-contain! size-full object-contain"
+                  priority
+                  resource={media}
+                />
+              </Float>
             )}
-            {link && (
-              <div className="flex gap-4 fl-mt-8/12">
-                <CMSLink {...link} appearance="button" />
-              </div>
-            )}
+            <NoiseOverlay className="z-4 isolate opacity-30 mix-blend-darken" />
           </div>
-          {media && typeof media === "object" && (
-            <Media
-              className="top-0 right-0 bottom-0 absolute bg-contain! w-[55%] h-full object-contain mix-blend-lighten"
-              priority
-              resource={media}
-            />
-          )}
         </div>
         <MouseGradientBg
           id="hero"
@@ -83,8 +90,8 @@ export const Hero = (hero: Page["hero"]) => {
         <Marquee
           items={keywords}
           speed={0.5}
-          className="fl-bottom-5/12 left-0 absolute fl-py-4/5 border-accent border-b w-full"
-          itemClassName="text-xs uppercase font-medium tracking-wide text-primary fl-px-2/3"
+          className="left-0 absolute border-accent border-b w-full clamp-[bottom,5,12] clamp-[py,4,5]"
+          itemClassName="text-xsmall text-primary clamp-[px,2,3]"
         />
       )}
     </>

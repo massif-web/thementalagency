@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
-import { draftMode } from "next/headers";
+import { draftMode, headers } from "next/headers";
 import type React from "react";
 import { AdminBar } from "@/components/AdminBar";
 import { Footer } from "@/components/Footer/Footer";
@@ -9,6 +9,7 @@ import { Providers } from "@/providers/Providers";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import "@/assets/css/style.css";
 import { getServerSideURL } from "@/utilities/getURL";
+import { cn } from "@/utilities/ui";
 
 const PrimaryFont = Rubik({
   subsets: ["latin"],
@@ -20,9 +21,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { isEnabled } = await draftMode();
+  const headerList = await headers();
+  const isLivePreview = headerList.get("x-live-preview") === "1";
 
   return (
-    <html lang="en" className={PrimaryFont.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn(PrimaryFont.variable, isLivePreview && "live-preview")}
+      suppressHydrationWarning
+    >
       <head>
         <link
           rel="icon"
@@ -45,15 +52,13 @@ export default async function RootLayout({
           <AdminBar
             className="right-0 bottom-0 z-50 fixed px-4"
             adminBarProps={{
-              preview: isEnabled,
+              preview: isEnabled || isLivePreview,
               className: "gap-2",
             }}
           />
-          <div className="page-margin">
-            <Header />
-            {children}
-            {/* <Footer /> */}
-          </div>
+          <Header isLivePreview={isLivePreview} />
+          {children}
+          <Footer isLivePreview={isLivePreview} />
         </Providers>
       </body>
     </html>

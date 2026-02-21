@@ -2,8 +2,8 @@
 @utility custom-underline {
   @apply custom-underline-base;
   @variant hover {
-    background-position: right calc(100% - var(--underline-position, 0.1em));
-    background-size: 0% var(--underline-thickness, 0.06875rem);
+    background-position: right calc(100% - var(--position));
+    background-size: 0% var(--thickness);
   }
 }
 
@@ -11,25 +11,27 @@
 @utility custom-underline-i {
   @apply custom-underline-i-base;
   @variant hover {
-    background-position: left calc(100% - var(--underline-position, 0.1em));
-    background-size: 100% var(--underline-thickness, 0.06875rem);
+    background-position: left calc(100% - var(--position));
+    background-size: 100% var(--thickness);
   }
 }
 
 @utility custom-underline-base {
+  --thickness: var(--underline-thickness, 0.075em);
+  --position: var(--underline-position, 0.05em);
   transition-duration: 500ms, 300ms;
   transition-property: background-size, color;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
   background-image: linear-gradient(to right, currentColor, currentColor);
-  background-position: left calc(100% - var(--underline-position, 0.1em));
-  background-size: 100% var(--underline-thickness, 0.06875rem);
+  background-position: left calc(100% - var(--position));
+  background-size: 100% var(--thickness);
   background-repeat: no-repeat;
   text-shadow:
-    1px 1px 0 var(--underline-bg-color, #fff),
-    -1px 1px 0 var(--underline-bg-color, #fff);
+    1px 1px 0 var(--underline-bg-color, var(--color-body, #fff)),
+    -1px 1px 0 var(--underline-bg-color, var(--color-body, #fff));
 }
 @utility custom-underline-i-base {
   @apply custom-underline-base;
-  background-position: right calc(100% - var(--underline-position, 0.1em));
-  background-size: 0% var(--underline-thickness, 0.06875rem);
+  background-position: right calc(100% - var(--position));
+  background-size: 0% var(--thickness);
 }

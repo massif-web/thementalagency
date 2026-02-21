@@ -47,9 +47,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
 
     // Add your custom classes based on heading level
     const classNames = {
-      h1: "fl-text-4xl/6xl leading-[1] uppercase font-semibold text-balance",
-      h2: "fl-text-[1.25rem/1.625rem] leading-tight uppercase font-semibold text-balance",
-      h3: "text-2xl font-medium mb-3",
+      h1: "h1",
+      h2: "h2",
+      h3: "h3",
       // etc.
     } as Record<string, string>;
 

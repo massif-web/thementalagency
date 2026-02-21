@@ -6,3 +6,31 @@
     contain-intrinsic-size: none;
   }  
 } */
+
+:where(section) {
+  .section-wrapper {
+    > div {
+      @apply clamp-[py,20,28];
+      @apply border-b border-accent/50;
+    }
+  }
+  &:is([id="ueber-mich"]) {
+    @apply border-b border-accent/50;
+    .section-wrapper {
+      > div {
+        @apply border-none;
+      }
+    }
+  }
+  &:is([id="kontakt"]) {
+    @apply not-in-[.live-preview]:clamp-[mt,10,24];
+    .section-wrapper {
+      @apply px-0;
+      @apply max-w-full!;
+      > div {
+        @apply py-0;
+        @apply border-b-0;
+      }
+    }
+  }
+}

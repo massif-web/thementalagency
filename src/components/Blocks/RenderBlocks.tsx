@@ -1,9 +1,9 @@
 import {
-  ArchiveBlock,
-  CallToActionBlock,
+  AboutBlock,
   CardsBlock,
-  ContentBlock,
-  FormBlock,
+  ContactBlock,
+  FaqBlock,
+  HrBlock,
   MediaBlock,
   TitleBlock,
 } from "@/components/Blocks";
@@ -11,12 +11,16 @@ import type { Page } from "@/payload-types";
 
 const blockComponents = {
   titleBlock: TitleBlock,
+  contactBlock: ContactBlock,
   cardsBlock: CardsBlock,
-  archiveBlock: ArchiveBlock,
-  contentBlock: ContentBlock,
-  callToActionBlock: CallToActionBlock,
-  formBlock: FormBlock,
+  // archiveBlock: ArchiveBlock,
+  faqBlock: FaqBlock,
+  // contentBlock: ContentBlock,
+  // callToActionBlock: CallToActionBlock,
+  aboutBlock: AboutBlock,
+  // formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  hrBlock: HrBlock,
 };
 
 export const RenderBlocks: React.FC<{
@@ -29,7 +33,7 @@ export const RenderBlocks: React.FC<{
 
   if (hasBlocks) {
     return (
-      <div className="section-p" data-blocks={`blocks-${slug}`}>
+      <div data-blocks={`blocks-${slug}`}>
         {blocks.map((block) => {
           const { blockType, ...blockProps } = block;
 

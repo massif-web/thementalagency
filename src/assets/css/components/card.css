@@ -1,12 +1,25 @@
 .card {
-  @apply relative overflow-clip border-t border-accent section-px fl-pt-4/6 section-pb bg-accent/2;
+  @apply before:[--grid-color:color-mix(in_oklab,var(--color-accent)_10%,transparent)];
+  @apply before:[--grid-size:30px];
+  @apply relative overflow-clip border-t border-accent section-px clamp-[pt,4,6] section-pb bg-accent/2;
   @apply before:absolute before:inset-0;
-  @apply before:bg-size-[25px_25px] before:bg-position-[calc(100%-1px)_calc(100%-1px)] before:-mask-linear-145 before:mask-linear-from-0% before:mask-linear-to-65%;
-  @apply before:[--grid-color:color-mix(in_oklab,var(--color-accent)_5%,transparent)];
+  @apply before:bg-size-[var(--grid-size)_var(--grid-size)] before:bg-position-[calc(100%-2px)_calc(100%-2px)] before:-mask-linear-145 before:mask-linear-from-0% before:mask-linear-to-65%;
   @apply before:bg-[linear-gradient(to_right,var(--grid-color)_1px,transparent_1px),linear-gradient(to_bottom,var(--grid-color)_1px,transparent_1px)];
   @apply after:absolute after:mix-blend-overlay after:inset-0 after:bg-linear-to-t after:from-accent/30 after:to-transparent after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100;
   .corner {
     @apply top-full right-full z-5 absolute size-20 -translate-y-1/2 translate-x-1/2;
     @apply after:rotate-45 after:size-full after:bg-body after:block;
+  }
+  .inner {
+    @apply z-5 relative;
+  }
+  &[data-size="oneThird"] {
+    @apply clamp-[px,5,8];
+  }
+  &[data-style="price"] {
+    @apply flex flex-col;
+    .inner {
+      @apply flex flex-col flex-1;
+    }
   }
 }

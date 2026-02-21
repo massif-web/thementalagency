@@ -1,34 +1,13 @@
-import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import type { Block } from "payload";
+import { titleFields } from "@/payload/fields/title";
+import { todoField } from "@/payload/fields/todos";
 
 export const TitleBlock: Block = {
   slug: "titleBlock",
   labels: {
-    singular: "Einleitung",
-    plural: "Einleitungen",
+    singular: "Titel / Einleitung",
+    plural: "Titel / Einleitungen",
   },
 
-  fields: [
-    {
-      name: "preTitle",
-      type: "text",
-      label: "Spitzmarke",
-    },
-    {
-      name: "richText",
-      type: "richText",
-      editor: lexicalEditor({
-        admin: {
-          hideInsertParagraphAtEnd: true,
-        },
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ["h2"] }),
-          ];
-        },
-      }),
-      label: false,
-    },
-  ],
+  fields: [...titleFields, { ...todoField }],
 };

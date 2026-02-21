@@ -15,3 +15,14 @@
 .hide-group-header .group-field__header {
   display: none;
 }
+
+.live-preview-window--is-live-previewing {
+  width: 50%;
+}
+
+.media-block-title {
+  > label,
+  .textarea-outer textarea {
+    @apply text-lg md:text-xl font-semibold;
+  }
+}

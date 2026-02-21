@@ -17,8 +17,8 @@ export const CardsBlock: React.FC<BlockProps> = async (props) => {
   };
 
   return (
-    <div className="fl-mt-16/24">
-      <div className="fl-gap-6/10 grid grid-cols-1 lg:grid-cols-12">
+    <div className="clamp-[mt,16,24]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 clamp-[gap,6,10]">
         {columns &&
           columns.length > 0 &&
           columns.map(async (col, index) => {
@@ -28,6 +28,7 @@ export const CardsBlock: React.FC<BlockProps> = async (props) => {
             return (
               <Card
                 data-style={style}
+                data-size={size}
                 className={cn(`col-span-4 ${colSpan}`, {
                   "md:col-span-2": size !== "full",
                 })}
@@ -35,22 +36,22 @@ export const CardsBlock: React.FC<BlockProps> = async (props) => {
               >
                 <div className="flex items-center gap-4">
                   <Media className="w-7.5 text-accent" resource={icon} />
-                  {name && (
-                    <h3 className="font-medium text-accent fl-text-2xl/3xl uppercase tracking-wide">
-                      {name}
-                    </h3>
-                  )}
+                  {name && <h3 className="text-accent h3">{name}</h3>}
                 </div>
                 {description && (
-                  <p className="mt-2 font-light">{description}</p>
+                  <p className="mt-4 max-w-[55ch] font-light">{description}</p>
                 )}
-                {price && <p className="font-bold">{price}</p>}
+                {price && (
+                  <p className="relative mt-auto pt-[0.25em] font-bold text-accent text-right clamp-[bottom,-2,-6]">
+                    {price}
+                  </p>
+                )}
               </Card>
             );
           })}
       </div>
       {link?.reference && (
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center clamp-[mt,10,16]">
           <CMSLink {...link} appearance="button" />
         </div>
       )}

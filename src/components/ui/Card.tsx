@@ -12,7 +12,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div className={cn(`card`, className)} {...props}>
       <div className="corner" />
-      <div className="z-5 relative">{children}</div>
+      <div className="inner">{children}</div>
     </div>
   );
 };

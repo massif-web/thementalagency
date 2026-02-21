@@ -7,5 +7,4 @@ export { protectRoles } from "./protectRoles";
 export { revalidateFooter } from "./revalidateFooter";
 export { revalidateHeader } from "./revalidateHeader";
 export { revalidatePage } from "./revalidatePage";
-export { revalidatePost } from "./revalidatePost";
 export { revalidateRedirects } from "./revalidateRedirects";

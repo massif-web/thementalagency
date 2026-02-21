@@ -15,27 +15,32 @@ export const Email: React.FC<
   EmailField & {
     errors: Partial<FieldErrorsImpl>;
     register: UseFormRegister<FieldValues>;
+    id: string;
+    message?: string;
   }
-> = ({ name, defaultValue, errors, label, register, required, width }) => {
+> = ({ id, message, defaultValue, label, register, required, width }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
 
         {required && (
           <span className="required">
-            * <span className="sr-only">(required)</span>
+            * <span className="sr-only">(Pflichtfeld)</span>
           </span>
         )}
       </Label>
       <Input
         defaultValue={defaultValue}
-        id={name}
-        type="text"
-        {...register(name, { pattern: /^\S[^\s@]*@\S+$/, required })}
+        id={id}
+        type="email"
+        {...register(id, {
+          pattern: /^\S[^\s@]*@\S+$/,
+          required: required ? message || "Bitte ausfüllen" : false,
+        })}
       />
 
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

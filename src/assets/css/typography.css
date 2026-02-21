@@ -12,25 +12,54 @@ body {
   :where(h1 + p) {
     @apply mt-[1em];
   }
+  :where(:is(h2, h3) + p) {
+    @apply mt-[1.5em];
+  }
+  :where(p + p) {
+    @apply mt-[1.25em];
+  }
 }
 
-.hero-text,
-.title-text {
+.hero-text {
   :where(:is(h1) + p) {
     @apply mt-[1.5em];
   }
-  :where(:is(h2) + p) {
-    @apply mt-[1em];
-  }
   p {
-    @apply font-medium fl-text-xl/2xl;
+    @apply font-medium clamp-[text,xl,2xl];
   }
 }
 
-.title-text {
-  p {
-    @apply font-light fl-text-sm/base tracking-wide;
-  }
+.text-small,
+.title-text p {
+  @apply font-light clamp-[text,sm,base] tracking-wide;
+}
+
+.caro-text {
+  @apply text-sm uppercase tracking-wide;
+}
+
+.text-xsmall {
+  @apply text-xs uppercase font-medium tracking-wide;
+}
+
+h1,
+.h1 {
+  @apply clamp-[text,4xl,6xl] leading-none uppercase font-semibold text-balance;
+}
+
+h2,
+.h2 {
+  @apply clamp-[text,1.25rem,1.625rem] leading-tight uppercase font-semibold text-balance;
+}
+
+h3,
+.h3 {
+  @apply font-medium uppercase tracking-wide clamp-[text,2xl,3xl];
+}
+
+h4,
+.h4 {
+  @apply font-medium uppercase text-white/40 tracking-wide clamp-[text,lg,xl];
 }
 
 .tw-prose {
@@ -64,7 +93,7 @@ body {
       }
     }
     .details-content {
-      @apply fl-ml-6/8;
+      @apply clamp-[ml,6,8];
     }
     &[open] {
       summary {
@@ -82,5 +111,5 @@ body {
 
 body,
 .text-default {
-  @apply fl-text-base/xl;
+  @apply clamp-[text,base,xl];
 }
