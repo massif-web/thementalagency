@@ -93,14 +93,14 @@ export const ContactForm: React.FC<BlockProps["formGroup"]> = (props) => {
   return (
     <div
       className={cn(
-        "z-10 relative bg-body p-8 border-2 border-accent/30 rounded-lg w-full min-w-200",
+        "z-10 relative bg-body border-2 border-accent/30 rounded-lg w-full lg:min-w-200 clamp-[p,5,8]",
         className,
       )}
       id="contact-form"
     >
       <button
         type="button"
-        className="top-4 right-4 absolute text-accent cursor-pointer"
+        className="top-0 lg:top-4 right-0 lg:right-4 absolute text-accent cursor-pointer"
         onClick={handleClose}
       >
         <X />

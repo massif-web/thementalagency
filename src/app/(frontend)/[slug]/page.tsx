@@ -7,9 +7,10 @@ import { Hero } from "@/components/Blocks/Hero";
 import { RenderBlocks } from "@/components/Blocks/RenderBlocks";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
+import type { Header as HeaderType } from "@/payload-types";
 import { generateMeta } from "@/utilities/generateMeta";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 import { cn } from "@/utilities/ui";
-
 export async function generateStaticParams() {
   const pages = await getPages();
 
@@ -35,8 +36,8 @@ export default async function Page({ params: paramsPromise }: Args) {
   const isLivePreview = headerList.get("x-live-preview") === "1";
   const { slug = "home" } = await paramsPromise;
   if (slug === "home" && !isLivePreview) {
-    const items = await getMainPages();
-    const { navItems } = items || {};
+    const headerData: HeaderType = await getCachedGlobal("header", 3)();
+    const navItems = headerData?.navItems || [];
     return navItems?.map((item) => {
       const { link } = item;
       if (
@@ -100,6 +101,7 @@ function PageContent({
       className={cn(
         "in-[.live-preview]:section-pb",
         page.slug !== "home" && "in-[.live-preview]:clamp-[pt,28,40]",
+        slug !== "home" && "section-pt sub-page min-h-svh",
       )}
       id={page.slug}
     >
@@ -139,16 +141,6 @@ const getPages = cache(async () => {
     limit: 1000,
     overrideAccess: false,
     pagination: false,
-  });
-  return pages;
-});
-
-const getMainPages = cache(async () => {
-  const payload = await getPayload({ config: configPromise });
-  const pages = await payload.findGlobal({
-    slug: "header",
-    depth: 3,
-    draft: false,
   });
   return pages;
 });

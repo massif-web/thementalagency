@@ -7,11 +7,17 @@
   }  
 } */
 
+:where(section:not(.sub-page)) {
+  .section-wrapper {
+    > div {
+      @apply border-b border-accent/50;
+    }
+  }
+}
 :where(section) {
   .section-wrapper {
     > div {
       @apply clamp-[py,20,28];
-      @apply border-b border-accent/50;
     }
   }
   &:is([id="ueber-mich"]) {

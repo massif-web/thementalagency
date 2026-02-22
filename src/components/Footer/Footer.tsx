@@ -22,13 +22,13 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
     <footer>
       <div className="border-accent/50 border-t">
         <div className="section-px">
-          <div className="grid grid-cols-12">
-            <div className="flex items-center col-span-8 clamp-[py,6,12]">
+          <div className="grid lg:grid-cols-12">
+            <div className="flex items-center lg:col-span-8 clamp-[py,6,12]">
               <LogoLink draft={isLivePreview}>
                 <Logo className="clamp-[w,90,101.25]" />
               </LogoLink>
             </div>
-            <div className="flex justify-center items-center col-span-4 border-accent/50 border-l">
+            <div className="flex justify-end lg:justify-center items-center lg:col-span-4 border-accent/50 lg:border-l clamp-[pb,6,12]">
               <FooterContact />
             </div>
           </div>
@@ -37,8 +37,8 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
 
       <div className="border-accent/50 border-t text-base">
         <div className="section-px">
-          <div className="grid grid-cols-12">
-            <div className="col-span-4 uppercase tracking-wide clamp-[py,4,8]">
+          <div className="grid lg:grid-cols-12">
+            <div className="max-lg:hidden lg:col-span-4 uppercase tracking-wide clamp-[py,4,8]">
               <FooterNav
                 items={navItems}
                 isAnchor={true}
@@ -46,7 +46,7 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
                 isLivePreview={isLivePreview}
               />
             </div>
-            <div className="col-span-4 border-accent/50 border-l uppercase tracking-wide clamp-[p,4,8]">
+            <div className="lg:col-span-4 border-accent/50 lg:border-l uppercase tracking-wide clamp-[p,4,8]">
               <FooterNav
                 items={socialLinks}
                 newTab={true}
@@ -54,7 +54,7 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
                 isLivePreview={isLivePreview}
               />
             </div>
-            <div className="col-span-4 border-accent/50 border-l clamp-[p,4,8]">
+            <div className="lg:col-span-4 border-accent/50 lg:border-l max-lg:text-center clamp-[p,4,8]">
               <a
                 href="mailto:echo@mentalagency.ch"
                 className="text-accent hover:text-primary custom-underline"
@@ -68,15 +68,15 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
 
       <div className="border-accent/50 border-t text-xs tracking-wide">
         <div className="section-px">
-          <div className="grid grid-cols-12">
-            <div className="col-span-8 clamp-[py,2,4]">
+          <div className="grid grid-cols-2 lg:grid-cols-12">
+            <div className="lg:col-span-8 clamp-[py,2,4]">
               <FooterNav
                 items={footerLinks}
                 gap={"sm"}
                 isLivePreview={isLivePreview}
               />
             </div>
-            <div className="col-span-4 text-right clamp-[p,2,4]">
+            <div className="lg:col-span-4 text-right clamp-[py,2,4]">
               <Copyright siteName={defaultSiteName} />
             </div>
           </div>

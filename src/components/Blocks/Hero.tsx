@@ -48,8 +48,18 @@ export const Hero = (hero: Page["hero"]) => {
           gap={14}
           className="z-5 isolate absolute inset-0 mask-b-from-65% mask-t-from-55% mask-radial-to-90% pointer-events-none mask-radial-at-center"
         />
-        <div className="relative flex flex-1 justify-center items-center w-full page-margin">
-          <div className="w-full section-p">
+        <div className="relative flex flex-1 justify-center lg:items-center w-full page-margin">
+          <div className="max-lg:pt-20 w-full section-p">
+            {media && typeof media === "object" && (
+              <Float className="top-0 right-0 bottom-0 lg:absolute relative lg:w-[55%] lg:h-full pointer-events-none user-select-none mix-blend-lighten">
+                <Media
+                  className="bg-contain! size-full object-contain"
+                  priority
+                  resource={media}
+                />
+              </Float>
+            )}
+            <NoiseOverlay className="z-4 isolate opacity-30 mix-blend-darken" />
             <div className="z-5 relative mt-[-10%] max-w-prose">
               {richText && (
                 <RichText
@@ -65,16 +75,6 @@ export const Hero = (hero: Page["hero"]) => {
                 </div>
               )}
             </div>
-            {media && typeof media === "object" && (
-              <Float className="top-0 right-0 bottom-0 absolute w-[55%] h-full pointer-events-none user-select-none mix-blend-lighten">
-                <Media
-                  className="bg-contain! size-full object-contain"
-                  priority
-                  resource={media}
-                />
-              </Float>
-            )}
-            <NoiseOverlay className="z-4 isolate opacity-30 mix-blend-darken" />
           </div>
         </div>
         <MouseGradientBg

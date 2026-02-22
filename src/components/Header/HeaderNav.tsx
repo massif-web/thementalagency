@@ -1,4 +1,6 @@
 "use client";
+import { Divide as Hamburger } from "hamburger-react";
+import { useState } from "react";
 import { CMSLink } from "@/components/Link";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import type { Header as HeaderType, Page } from "@/payload-types";
@@ -7,10 +9,14 @@ import { cn } from "@/utilities/ui";
 export const HeaderNav = ({
   data,
   isLivePreview = false,
+  isMobile = false,
 }: {
   data: HeaderType;
   isLivePreview: boolean;
+  isMobile?: boolean;
 }) => {
+  const [isOpen, setOpen] = useState(false);
+
   const navItems = data?.navItems || [];
   const ids = navItems.map((item) => {
     const { link } = item;
@@ -34,21 +40,46 @@ export const HeaderNav = ({
   const activeId = useScrollSpy(ids, scrollPadding, isLivePreview);
 
   return (
-    <nav className="flex items-center *:px-4 *:py-2 *:hover:text-accent/50 *:text-sm *:uppercase *:tracking-wide *:transition-colors *:duration-300 clamp-[gap,4,8]">
-      {navItems.map(({ link }, index) => {
-        const key = `nav-link-${index}-${link?.url}`;
-        return (
-          <CMSLink
-            key={key}
-            {...link}
-            className={cn(activeId === ids[index] && "text-accent")}
-            isAnchor
-            appearance="nav"
-            prefetch={false}
-            isLivePreview={isLivePreview}
+    <>
+      {isMobile && (
+        <div className="lg:hidden top-1 right-4 z-10 absolute">
+          <Hamburger
+            toggled={isOpen}
+            toggle={setOpen}
+            duration={0.3}
+            direction="right"
+            distance="sm"
+            label="Menü öffnen"
+            color="currentColor"
           />
-        );
-      })}
-    </nav>
+        </div>
+      )}
+      <nav
+        className={cn(
+          isMobile && !isOpen ? "hidden" : "flex",
+          isMobile &&
+            "bg-header flex-col justify-center items-center *:px-4 *:py-2 clamp-[py,10,12] clamp-[gap,6,8] *:text-xl",
+          !isMobile &&
+            "hidden lg:flex items-center *:px-4 *:py-2 clamp-[gap,4,8] *:text-sm",
+          "*:hover:text-accent/50 *:uppercase *:tracking-wide *:transition-colors *:duration-300",
+        )}
+      >
+        {navItems.map(({ link }, index) => {
+          const key = `nav-link-${index}-${link?.url}`;
+          return (
+            <CMSLink
+              key={key}
+              {...link}
+              {...(isMobile && { onClick: () => setOpen(false) })}
+              className={cn(activeId === ids[index] && "text-accent")}
+              isAnchor
+              appearance="nav"
+              prefetch={false}
+              isLivePreview={isLivePreview}
+            />
+          );
+        })}
+      </nav>
+    </>
   );
 };

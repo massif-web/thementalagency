@@ -14,9 +14,9 @@ export const Todos: React.FC<Props> = ({ todos, className }) => {
         return (
           <li
             key={key}
-            className="inline-flex items-center space-x-2 px-2 py-1 border border-accent text-accent text-xsmall leading-none"
+            className="inline-flex items-start space-x-2 px-2 py-2 border border-accent text-accent text-xsmall leading-3.5"
           >
-            <Check className="w-3.25" strokeWidth={4} />
+            <Check className="size-3.25" strokeWidth={4} />
             <span>{todo.trim()}</span>
           </li>
         );

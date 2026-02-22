@@ -9,10 +9,10 @@ export const TitleBlock: React.FC<BlockProps> = (props) => {
   const isCentered = style === "centered";
 
   return (
-    <div className={cn({ "grid lg:grid-cols-2": todos })}>
+    <div className={cn({ "grid max-lg:gap-6 lg:grid-cols-2": todos })}>
       <div>
         <CaroText
-          className={cn("font-light text-accent", {
+          className={cn("pl-0.5 font-light text-accent", {
             "justify-center": isCentered,
           })}
         >
@@ -35,7 +35,7 @@ export const TitleBlock: React.FC<BlockProps> = (props) => {
       </div>
       {todos && (
         <div className="flex justify-end items-center">
-          <Todos todos={todos} className="items-end" />
+          <Todos todos={todos} className="items-start lg:items-end" />
         </div>
       )}
     </div>

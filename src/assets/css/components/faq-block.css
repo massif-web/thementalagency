@@ -1,9 +1,9 @@
 .faq-item {
   @apply bg-accent/2 border-accent/50 border-t;
   > button {
-    @apply flex justify-between items-center gap-4 px-2 py-3 w-full text-accent text-left uppercase cursor-pointer clamp-[text,lg,xl];
+    @apply flex justify-between items-start leading-tight gap-4 px-2 py-3 w-full text-accent text-left md:uppercase cursor-pointer clamp-[text,lg,xl];
     .icon {
-      @apply size-3.5 text-accent transition-transform duration-300;
+      @apply max-lg:mt-0.75 size-4 lg:size-3.5 text-accent transition-transform duration-300;
     }
   }
   .answer {

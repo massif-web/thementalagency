@@ -25,7 +25,7 @@ body {
     @apply mt-[1.5em];
   }
   p {
-    @apply font-medium clamp-[text,xl,2xl];
+    @apply font-medium clamp-[text,lg,2xl];
   }
 }
 

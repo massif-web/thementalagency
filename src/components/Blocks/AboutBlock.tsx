@@ -19,16 +19,18 @@ export const AboutBlock: React.FC<BlockProps> = (props) => {
   return (
     <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
       <div className="flex flex-col gap-8 lg:col-span-2">
-        <CaroText className="font-light text-accent">{preTitle}</CaroText>
-        <div className={"mt-4 max-w-[55ch]"}>
-          {richText && (
-            <RichText
-              data={richText}
-              className="title-text"
-              enableGutter={false}
-              enableProse={false}
-            />
-          )}
+        <div>
+          <CaroText className="font-light text-accent">{preTitle}</CaroText>
+          <div className={"mt-4 max-w-[55ch]"}>
+            {richText && (
+              <RichText
+                data={richText}
+                className="title-text"
+                enableGutter={false}
+                enableProse={false}
+              />
+            )}
+          </div>
         </div>
         {todos && (
           <div className="flex flex-col gap-6 mt-auto">
