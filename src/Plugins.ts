@@ -38,8 +38,10 @@ export const plugins: Plugin[] = [
     collections: ["pages"],
     overrides: {
       access: {
+        read: admins,
         admin: admins,
       },
+
       labels: {
         singular: {
           en: i18n.en["plugin-redirects"].labels.singular,
@@ -82,6 +84,10 @@ export const plugins: Plugin[] = [
       payment: false,
     },
     formOverrides: {
+      access: {
+        read: admins,
+        admin: admins,
+      },
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ("name" in field && field.name === "confirmationMessage") {

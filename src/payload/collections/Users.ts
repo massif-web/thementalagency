@@ -1,7 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { admins } from "../access/admins";
-import { adminsAndUser } from "../access/adminsAndUser";
-import { anyone } from "../access/anyone";
+import { adminsAndUser, adminsAndUserBoolean } from "../access/adminsAndUser";
 import { loginAfterCreate } from "../hooks/loginAfterCreate";
 import { protectRoles } from "../hooks/protectRoles";
 
@@ -27,11 +26,11 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: adminsAndUser,
-    create: anyone,
+    create: admins,
     update: adminsAndUser,
     delete: admins,
     unlock: admins,
-    admin: admins,
+    admin: adminsAndUserBoolean,
   },
   hooks: {
     afterChange: [loginAfterCreate],
@@ -47,8 +46,8 @@ export const Users: CollectionConfig = {
       required: true,
       unique: true,
       access: {
-        read: adminsAndUser,
-        update: adminsAndUser,
+        read: adminsAndUserBoolean,
+        update: adminsAndUserBoolean,
       },
     },
     {
