@@ -76,15 +76,15 @@ export const ContactForm: React.FC<BlockProps["formGroup"]> = (props) => {
   const open = useUiStore((s) => s.contactOpen);
 
   const handleClose = () => {
-    if (formRef.current) {
-      if (!confirmBeforeClosing(formRef.current)) {
-        return;
-      }
+    if (formRef.current && !confirmBeforeClosing(formRef.current)) {
+      return;
+    }
+    requestAnimationFrame(() => {
       setClassName("animate-out duration-300 fade-out zoom-out");
       setTimeout(() => {
         closeContact();
       }, 300);
-    }
+    });
   };
 
   useEscapeKey(handleClose, open);
@@ -280,84 +280,87 @@ const Form: React.FC<FormProps> = ({
   return (
     <FormProvider {...formMethods}>
       {!isLoading && hasSubmitted && successMessage && successMessage}
-      {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
+      {isLoading && !hasSubmitted && (
+        <p>Nachricht wird empfangen, bitte warten...</p>
+      )}
       {error && (
         <div className="form-alert error">{`${error.status || "500"}: ${error.message || ""}`}</div>
       )}
-      {!hasSubmitted && (
-        <form id={id} ref={ref} onSubmit={handleSubmit(onSubmit)}>
-          {steps?.map((step, index) => {
-            const key = `step-${step?.id}-${index}`;
-            const stepData = data.filter((d) => d.stepIndex === index);
-            return (
-              <div
-                className={cn(
-                  "text-left",
-                  currentStep === index + 1 ? "block" : "hidden",
-                )}
-                key={key}
-              >
-                {step?.title && <h4 className="h4">{step.title}</h4>}
-                <div className="space-y-8 mt-4">
-                  {stepData.map((field) => {
-                    const blockType = field.blockType || "text";
-                    // biome-ignore lint: unnecessary
-                    const Field: React.FC<any> =
-                      fields?.[blockType as keyof typeof fields];
-                    return (
-                      <div className={cn("")} key={field.id}>
-                        <Field
-                          {...field}
-                          control={control}
-                          errors={errors}
-                          register={register}
-                        />
-                      </div>
-                    );
-                  })}
+      {(isLoading && !hasSubmitted) ||
+        (!isLoading && !hasSubmitted && (
+          <form id={id} ref={ref} onSubmit={handleSubmit(onSubmit)}>
+            {steps?.map((step, index) => {
+              const key = `step-${step?.id}-${index}`;
+              const stepData = data.filter((d) => d.stepIndex === index);
+              return (
+                <div
+                  className={cn(
+                    "text-left",
+                    currentStep === index + 1 ? "block" : "hidden",
+                  )}
+                  key={key}
+                >
+                  {step?.title && <h4 className="h4">{step.title}</h4>}
+                  <div className="space-y-8 mt-4">
+                    {stepData.map((field) => {
+                      const blockType = field.blockType || "text";
+                      // biome-ignore lint: unnecessary
+                      const Field: React.FC<any> =
+                        fields?.[blockType as keyof typeof fields];
+                      return (
+                        <div className={cn("")} key={field.id}>
+                          <Field
+                            {...field}
+                            control={control}
+                            errors={errors}
+                            register={register}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-          <div className="flex justify-end mt-8">
-            {currentStep > 1 && (
-              <PrimaryButton
-                form={id}
-                type="button"
-                className="mr-auto"
-                onClick={() => setCurrentStep((current) => current - 1)}
-              >
-                Zurück
-              </PrimaryButton>
-            )}
-            {currentStep < numSteps && (
-              <PrimaryButton
-                form={id}
-                type="button"
-                className="ml-auto"
-                onClick={async () => {
-                  const stepIndex = currentStep - 1;
-                  const names = getStepFieldNames(stepIndex);
+              );
+            })}
+            <div className="flex justify-end mt-8">
+              {currentStep > 1 && (
+                <PrimaryButton
+                  form={id}
+                  type="button"
+                  className="mr-auto"
+                  onClick={() => setCurrentStep((current) => current - 1)}
+                >
+                  Zurück
+                </PrimaryButton>
+              )}
+              {currentStep < numSteps && (
+                <PrimaryButton
+                  form={id}
+                  type="button"
+                  className="ml-auto"
+                  onClick={async () => {
+                    const stepIndex = currentStep - 1;
+                    const names = getStepFieldNames(stepIndex);
 
-                  const ok = await trigger(names, {
-                    shouldFocus: true,
-                  });
-                  if (!ok) return;
+                    const ok = await trigger(names, {
+                      shouldFocus: true,
+                    });
+                    if (!ok) return;
 
-                  setCurrentStep((c) => c + 1);
-                }}
-              >
-                Weiter
-              </PrimaryButton>
-            )}
-            {currentStep === numSteps && (
-              <PrimaryButton form={id} type="submit" className="ml-auto">
-                Senden
-              </PrimaryButton>
-            )}
-          </div>
-        </form>
-      )}
+                    setCurrentStep((c) => c + 1);
+                  }}
+                >
+                  Weiter
+                </PrimaryButton>
+              )}
+              {currentStep === numSteps && (
+                <PrimaryButton form={id} type="submit" className="ml-auto">
+                  Senden
+                </PrimaryButton>
+              )}
+            </div>
+          </form>
+        ))}
     </FormProvider>
   );
 };
