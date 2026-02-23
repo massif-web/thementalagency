@@ -22,6 +22,8 @@ export async function generateStaticParams() {
       return { slug };
     });
 
+  console.log("Generated static params for pages:", params); // Debug log to verify generated params
+
   return params;
 }
 
@@ -54,6 +56,7 @@ export default async function Page({ params: paramsPromise }: Args) {
             key={page.id}
             page={page}
             url={url}
+            slug={slug}
             isLivePreview={false}
           />
         );
@@ -95,6 +98,8 @@ function PageContent({
     return <PayloadRedirects url={url} />;
   }
   const { hero, layout } = page;
+
+  console.log(`Rendering page with slug: ${slug}, page slug: ${page.slug}`); // Debug log to verify page rendering
 
   return (
     <section
