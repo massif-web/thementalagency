@@ -9,6 +9,12 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   : process.env.__NEXT_PRIVATE_ORIGIN || "http://localhost:3000";
 
 const nextConfig: NextConfig = {
+  headers: async () => [
+    {
+      source: "/(.*)",
+      headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+    },
+  ],
   reactCompiler: true,
   poweredByHeader: false,
   compiler: {
