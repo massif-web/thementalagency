@@ -8,6 +8,7 @@ import {
   HeadingFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import type { Plugin } from "payload";
 import { Media } from "@/payload/collections/Media";
 import { revalidateRedirects } from "@/payload/hooks/revalidateRedirects";
@@ -34,6 +35,13 @@ const generateURL: GenerateURL<Page> = ({ doc }) =>
 // };
 
 export const plugins: Plugin[] = [
+  vercelBlobStorage({
+    enabled: true,
+    collections: {
+      media: true, // your media collection slug
+    },
+    token: process.env.BLOB_READ_WRITE_TOKEN || "",
+  }),
   redirectsPlugin({
     collections: ["pages"],
     overrides: {
