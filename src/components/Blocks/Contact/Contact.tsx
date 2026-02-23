@@ -17,6 +17,28 @@ export const Contact: React.FC<Props> = ({
 }) => {
   const openContact = useUiStore((s) => s.openContact);
   const open = useUiStore((s) => s.contactOpen);
+  const handleClick = async () => {
+    const section = document.getElementById("kontakt");
+    let needsScroll = false;
+    const scrollTop = section?.offsetTop || 0;
+    if (
+      window.scrollY > scrollTop ||
+      window.innerHeight + window.scrollY < scrollTop
+    ) {
+      needsScroll = true;
+    }
+
+    if (section && needsScroll) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        openContact();
+      }, 300);
+      return;
+    }
+
+    openContact();
+  };
+
   return (
     <>
       {open ? (
@@ -29,7 +51,7 @@ export const Contact: React.FC<Props> = ({
               <Button
                 variant={"primary"}
                 size={"primary"}
-                onClick={openContact}
+                onClick={handleClick}
               >
                 <span>
                   <span>{buttonLabel}</span>
