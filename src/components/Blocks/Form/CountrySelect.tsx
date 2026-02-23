@@ -18,11 +18,12 @@ export const CountrySelect: React.FC<
   CountryField & {
     control: Control;
     errors: Partial<FieldErrorsImpl>;
+    id: string;
   }
-> = ({ name, control, errors, label, required, width }) => {
+> = ({ id, name, control, label, required, width }) => {
   return (
     <FormGroup width={width}>
-      <Label className="" htmlFor={name}>
+      <Label className="" htmlFor={id}>
         {label}
 
         {required && (
@@ -43,7 +44,7 @@ export const CountrySelect: React.FC<
               onValueChange={(val) => onChange(val)}
               value={controlledValue?.value}
             >
-              <SelectTrigger className="w-full" id={name}>
+              <SelectTrigger className="w-full" id={id}>
                 <SelectValue placeholder={label} />
               </SelectTrigger>
               <SelectContent>
@@ -60,7 +61,7 @@ export const CountrySelect: React.FC<
         }}
         rules={{ required }}
       />
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

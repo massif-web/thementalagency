@@ -14,11 +14,12 @@ export const NumberInput: React.FC<
   TextField & {
     errors: Partial<FieldErrorsImpl>;
     register: UseFormRegister<FieldValues>;
+    id: string;
   }
-> = ({ name, defaultValue, errors, label, register, required, width }) => {
+> = ({ id, defaultValue, label, register, required, width }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
 
         {required && (
@@ -29,11 +30,11 @@ export const NumberInput: React.FC<
       </Label>
       <Input
         defaultValue={defaultValue}
-        id={name}
+        id={id}
         type="number"
-        {...register(name, { required })}
+        {...register(id, { required })}
       />
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

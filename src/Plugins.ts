@@ -1,6 +1,5 @@
 import { blurDataUrlsPlugin } from "@oversightstudio/blur-data-urls";
 import { formBuilderPlugin } from "@payloadcms/plugin-form-builder";
-import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import type { GenerateTitle, GenerateURL } from "@payloadcms/plugin-seo/types";
@@ -10,7 +9,6 @@ import {
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
 import type { Plugin } from "payload";
-import { deepMergeWithCombinedArrays } from "payload";
 import { Media } from "@/payload/collections/Media";
 import { revalidateRedirects } from "@/payload/hooks/revalidateRedirects";
 import type { Page } from "@/payload-types";
@@ -27,13 +25,13 @@ const generateTitle: GenerateTitle<Page> = ({ doc }) => {
 const generateURL: GenerateURL<Page> = ({ doc }) =>
   generatePageURL({ path: doc?.slug || null, preview: false }) || "";
 
-const generalTranslation = {
-  name: "title",
-  label: {
-    en: i18n.en.general.title,
-    de: i18n.de.general.title,
-  },
-};
+// const generalTranslation = {
+//   name: "title",
+//   label: {
+//     en: i18n.en.general.title,
+//     de: i18n.de.general.title,
+//   },
+// };
 
 export const plugins: Plugin[] = [
   redirectsPlugin({

@@ -9,22 +9,14 @@ import {
   type JSXConvertersFunction,
   LinkJSXConverter,
 } from "@payloadcms/richtext-lexical/react";
-import { BannerBlock } from "@/components/Blocks/Banner";
-import { CallToActionBlock } from "@/components/Blocks/CallToAction";
 import { CodeBlock, type CodeBlockProps } from "@/components/Blocks/CodeBlock";
 import { MediaBlock } from "@/components/Blocks/MediaBlock";
-import type {
-  BannerBlock as BannerBlockProps,
-  CallToActionBlock as CTABlockProps,
-  MediaBlock as MediaBlockProps,
-} from "@/payload-types";
+import type { MediaBlock as MediaBlockProps } from "@/payload-types";
 import { cn } from "@/utilities/ui";
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<
-      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps
-    >;
+  | SerializedBlockNode<MediaBlockProps | CodeBlockProps>;
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   // biome-ignore lint: yes, we want to assert this
@@ -62,11 +54,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
     );
   },
   blocks: {
-    bannerBlock: ({
-      node,
-    }: {
-      node: SerializedBlockNode<BannerBlockProps>;
-    }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }: { node: SerializedBlockNode<MediaBlockProps> }) => (
       <MediaBlock
         className="col-span-3 col-start-1"
@@ -80,11 +67,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
     codeBlock: ({ node }: { node: SerializedBlockNode<CodeBlockProps> }) => (
       <CodeBlock className="col-start-2" {...node.fields} />
     ),
-    callToActionBlock: ({
-      node,
-    }: {
-      node: SerializedBlockNode<CTABlockProps>;
-    }) => <CallToActionBlock {...node.fields} />,
   },
 });
 

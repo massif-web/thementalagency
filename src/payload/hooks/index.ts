@@ -1,4 +1,4 @@
-export { beforeSyncWithSearch } from "./beforeSync";
+// export { beforeSyncWithSearch } from "./beforeSync";
 export { loginAfterCreate } from "./loginAfterCreate";
 export { populateAuthors } from "./populateAuthors";
 export { populatePublishedAt } from "./populatePublishedAt";

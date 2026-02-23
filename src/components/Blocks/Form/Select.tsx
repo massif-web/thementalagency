@@ -18,20 +18,12 @@ export const Select: React.FC<
   SelectField & {
     control: Control;
     errors: Partial<FieldErrorsImpl>;
+    id: string;
   }
-> = ({
-  name,
-  control,
-  errors,
-  label,
-  options,
-  required,
-  width,
-  defaultValue,
-}) => {
+> = ({ id, name, control, label, options, required, width, defaultValue }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
         {required && (
           <span className="required">
@@ -51,7 +43,7 @@ export const Select: React.FC<
               onValueChange={(val) => onChange(val)}
               value={controlledValue?.value}
             >
-              <SelectTrigger className="w-full" id={name}>
+              <SelectTrigger className="w-full" id={id}>
                 <SelectValue placeholder={label} />
               </SelectTrigger>
               <SelectContent>
@@ -68,7 +60,7 @@ export const Select: React.FC<
         }}
         rules={{ required }}
       />
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };

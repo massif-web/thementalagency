@@ -18,11 +18,12 @@ export const UsStateSelect: React.FC<
   StateField & {
     control: Control;
     errors: Partial<FieldErrorsImpl>;
+    id: string;
   }
-> = ({ name, control, errors, label, required, width }) => {
+> = ({ id, name, control, label, required, width }) => {
   return (
     <FormGroup width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={id}>
         {label}
         {required && (
           <span className="required">
@@ -42,7 +43,7 @@ export const UsStateSelect: React.FC<
               onValueChange={(val) => onChange(val)}
               value={controlledValue?.value}
             >
-              <SelectTrigger className="w-full" id={name}>
+              <SelectTrigger className="w-full" id={id}>
                 <SelectValue placeholder={label} />
               </SelectTrigger>
               <SelectContent>
@@ -59,7 +60,7 @@ export const UsStateSelect: React.FC<
         }}
         rules={{ required }}
       />
-      {errors[name] && <FormError name={name} />}
+      <FormError id={id} />
     </FormGroup>
   );
 };
