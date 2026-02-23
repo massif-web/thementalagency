@@ -28,7 +28,7 @@ export async function Footer({ isLivePreview }: { isLivePreview: boolean }) {
                 <Logo className="clamp-[w,90,101.25]" />
               </LogoLink>
             </div>
-            <div className="flex justify-end lg:justify-center items-center lg:col-span-4 border-accent/50 lg:border-l clamp-[pb,6,12]">
+            <div className="flex justify-end lg:justify-center items-center lg:col-span-4 max-lg:pb-6 border-accent/50 lg:border-l">
               <FooterContact />
             </div>
           </div>
