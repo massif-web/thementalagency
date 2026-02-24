@@ -8,6 +8,14 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : process.env.__NEXT_PRIVATE_ORIGIN || "http://localhost:3000";
 
+console.log("Next.js configuration:");
+console.log("NEXT_PUBLIC_SERVER_URL:", NEXT_PUBLIC_SERVER_URL);
+console.log(
+  "Vercel Project Production URL:",
+  process.env.VERCEL_PROJECT_PRODUCTION_URL,
+);
+console.log("__NEXT_PRIVATE_ORIGIN:", process.env.__NEXT_PRIVATE_ORIGIN);
+
 const nextConfig: NextConfig = {
   headers: async () => [
     {
