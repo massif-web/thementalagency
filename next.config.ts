@@ -40,7 +40,6 @@ const nextConfig: NextConfig = {
     qualities: [75, 85],
     formats: ["image/avif", "image/webp"],
     dangerouslyAllowLocalIP: true,
-    contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // localPatterns: [
     //   {

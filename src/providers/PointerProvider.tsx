@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef } from "react";
 
 type PointerContextValue = {
   coordsRef: React.RefObject<{ x: number; y: number }>;
