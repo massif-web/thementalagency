@@ -7,23 +7,33 @@ import { Hero } from "@/components/Blocks/Hero";
 import { RenderBlocks } from "@/components/Blocks/RenderBlocks";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
-import type { Header as HeaderType } from "@/payload-types";
+import type {
+  Footer as FooterType,
+  Header as HeaderType,
+} from "@/payload-types";
 import { generateMeta } from "@/utilities/generateMeta";
-import { getCachedGlobal } from "@/utilities/getGlobals";
+import { getCachedGlobal, getGlobal } from "@/utilities/getGlobals";
 import { cn } from "@/utilities/ui";
+
 export async function generateStaticParams() {
-  const pages = await getPages();
+  const footerData: FooterType = await getCachedGlobal("footer", 1)();
+  const pages = footerData?.items || [];
 
-  const params = pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== "home";
+  const params = pages
+    .map(({ link }) => {
+      if (
+        link &&
+        link.type === "reference" &&
+        link.reference &&
+        typeof link.reference.value === "object"
+      ) {
+        const page = link.reference
+          .value as RequiredDataFromCollectionSlug<"pages">;
+        return { slug: page.slug };
+      }
+      return null;
     })
-    .map(({ slug }) => {
-      return { slug };
-    });
-
-  console.log("Generated static params for pages:", params); // Debug log to verify generated params
-
+    .filter((param): param is { slug: string } => param !== null);
   return params;
 }
 
@@ -38,7 +48,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const isLivePreview = headerList.get("x-live-preview") === "1";
   const { slug = "home" } = await paramsPromise;
   if (slug === "home" && !isLivePreview) {
-    const headerData: HeaderType = await getCachedGlobal("header", 3)();
+    const headerData: HeaderType = await getCachedPages();
     const navItems = headerData?.navItems || [];
     return navItems?.map((item) => {
       const { link } = item;
@@ -99,8 +109,6 @@ function PageContent({
   }
   const { hero, layout } = page;
 
-  console.log(`Rendering page with slug: ${slug}, page slug: ${page.slug}`); // Debug log to verify page rendering
-
   return (
     <section
       className={cn(
@@ -138,17 +146,7 @@ export async function generateMetadata({
   return generateMeta({ doc: page });
 }
 
-const getPages = cache(async () => {
-  const payload = await getPayload({ config: configPromise });
-  const pages = await payload.find({
-    collection: "pages",
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-  });
-  return pages;
-});
+const getCachedPages = cache(async () => await getGlobal("header", 3));
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode();
