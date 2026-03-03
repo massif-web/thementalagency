@@ -8,6 +8,7 @@ import { Header } from "@/components/Header/Header";
 import { Providers } from "@/providers/Providers";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import "@/assets/css/style.css";
+import { defaultSiteName } from "@/config";
 import { getServerSideURL } from "@/utilities/getURL";
 import { cn } from "@/utilities/ui";
 
@@ -44,7 +45,7 @@ export default async function RootLayout({
           sizes="180x180"
           href="/apple-touch-icon.png"
         />
-        <meta name="apple-mobile-web-app-title" content="The Mental Agency" />
+        <meta name="apple-mobile-web-app-title" content={defaultSiteName} />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="bg-body font-sans text-primary">

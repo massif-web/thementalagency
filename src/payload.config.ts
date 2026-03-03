@@ -26,6 +26,7 @@ import { defaultLexical } from "@/payload/fields/defaultLexical";
 import { Footer } from "@/payload/globals/Footer";
 import { Header } from "@/payload/globals/Header";
 import { getServerSideURL } from "@/utilities/getURL";
+import { defaultEmailAddress, defaultSiteName } from "./config";
 import { customTranslations } from "./translations";
 
 const filename = fileURLToPath(import.meta.url);
@@ -103,8 +104,8 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   email: nodemailerAdapter({
-    defaultFromAddress: "echo@mentalagency.ch",
-    defaultFromName: "The Mental Agency®",
+    defaultFromAddress: defaultEmailAddress,
+    defaultFromName: defaultSiteName,
     transportOptions: {
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT) || 587,
