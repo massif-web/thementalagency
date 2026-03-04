@@ -58,7 +58,7 @@ export default async function RootLayout({
             }}
           />
           <Header isLivePreview={isLivePreview} />
-          {children}
+          <main>{children}</main>
           <Footer isLivePreview={isLivePreview} />
         </Providers>
       </body>
