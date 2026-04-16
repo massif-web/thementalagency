@@ -51,7 +51,7 @@ export const CMSLink = (props: CMSLinkType) => {
   if (!url) return null;
   const href =
     type === "anchor" || isAnchor
-      ? `#${url}`
+      ? `/#${url}`
       : url === "home"
         ? ""
         : type === "custom"
