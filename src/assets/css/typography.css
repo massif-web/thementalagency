@@ -12,8 +12,11 @@ body {
   :where(h1 + p) {
     @apply mt-[1em];
   }
-  :where(:is(h1, h2, h3) + *, p + :is(h1, h2, h3)) {
+  :where(:is(h1, h2) + *, p + :is(h1, h2, h3)) {
     @apply mt-[1.5em];
+  }
+  :where(:is(h3) + *) {
+    @apply mt-0;
   }
   :where(p + p) {
     @apply mt-[1.25em];
