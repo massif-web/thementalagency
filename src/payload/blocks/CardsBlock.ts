@@ -99,10 +99,6 @@ export const CardsBlock: Block = {
           label: "Mit Zeit- /Preisangabe",
           value: "price",
         },
-        {
-          label: "Als FAQ",
-          value: "faq",
-        },
       ],
     },
     {
