@@ -221,15 +221,17 @@ const Form: React.FC<FormProps> = ({
     trigger,
   } = formMethods;
 
-  const onSubmit = (data: FormFieldBlock[]) => {
+  const onSubmit = (submittedData: FormFieldBlock[]) => {
     let loadingTimerID: ReturnType<typeof setTimeout>;
     const submitForm = async () => {
       setError(undefined);
 
-      const dataToSend = Object.entries(data).map(([label, value]) => ({
-        field: label,
-        value,
-      }));
+      const dataToSend = Object.entries(submittedData).map(
+        ([label, value]) => ({
+          field: data.find((d) => d.id === label)?.label || label,
+          value,
+        }),
+      );
 
       // delay loading indicator by 1s
       loadingTimerID = setTimeout(() => {
