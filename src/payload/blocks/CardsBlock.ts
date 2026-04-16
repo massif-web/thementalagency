@@ -96,7 +96,7 @@ export const CardsBlock: Block = {
           value: "icons",
         },
         {
-          label: "Mit Preisangaben",
+          label: "Mit Zeit- /Preisangabe",
           value: "price",
         },
         {
