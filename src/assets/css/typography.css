@@ -12,17 +12,27 @@ body {
   :where(h1 + p) {
     @apply mt-[1em];
   }
-  :where(:is(h2, h3) + p) {
+  :where(:is(h1, h2, h3) + *, p + :is(h1, h2, h3)) {
     @apply mt-[1.5em];
   }
   :where(p + p) {
     @apply mt-[1.25em];
+  }
+  a {
+    @apply custom-underline no-underline text-accent;
+    &:where(.maps-links, .links-underlined-i) {
+      @apply custom-underline-i;
+    }
   }
 }
 
 .hero-text {
   :where(:is(h1) + p) {
     @apply mt-[1.5em];
+  }
+  h1,
+  .h1 {
+    @apply clamp-[text,4xl,6xl] leading-none;
   }
   p {
     @apply font-medium clamp-[text,lg,2xl];
@@ -44,7 +54,7 @@ body {
 
 h1,
 .h1 {
-  @apply clamp-[text,4xl,6xl] leading-none uppercase font-semibold text-balance;
+  @apply clamp-[text,2xl,4xl] leading-tight uppercase font-semibold text-balance;
 }
 
 h2,
@@ -54,7 +64,7 @@ h2,
 
 h3,
 .h3 {
-  @apply font-medium uppercase tracking-wide clamp-[text,2xl,3xl];
+  @apply font-medium uppercase tracking-wide clamp-[text,lg,xl];
 }
 
 h4,

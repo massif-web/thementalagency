@@ -36,7 +36,7 @@ export const titleFields: Field[] = [
       features: ({ rootFeatures }) => {
         return [
           ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ["h2"] }),
+          HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3"] }),
         ];
       },
     }),
