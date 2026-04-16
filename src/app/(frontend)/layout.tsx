@@ -8,6 +8,8 @@ import { Header } from "@/components/Header/Header";
 import { Providers } from "@/providers/Providers";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import "@/assets/css/style.css";
+import { Suspense } from "react";
+import { MatomoAnalytics } from "@/components/Matomo";
 import { defaultSiteName } from "@/config";
 import { getServerSideURL } from "@/utilities/getURL";
 import { cn } from "@/utilities/ui";
@@ -61,6 +63,9 @@ export default async function RootLayout({
           <main>{children}</main>
           <Footer isLivePreview={isLivePreview} />
         </Providers>
+        <Suspense fallback={null}>
+          <MatomoAnalytics />
+        </Suspense>
       </body>
     </html>
   );
